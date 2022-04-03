@@ -1,0 +1,83 @@
+:root {
+  --primaryblue: #041562;
+  --secondaryblue: #051661;
+  --primaryFont: "Tw Cen Mt", "Giuconda Regular";
+}
+
+.sm-logo {
+  width: 2rem;
+}
+
+body {
+  font-family: var(--primaryFont);
+}
+
+.primary-blue {
+  background: var(--primaryblue);
+}
+
+.secondary-blue {
+  background: var(--secondaryblue);
+}
+
+.text-blue {
+  color: #041562;
+}
+
+.hover-white {
+  color: white;
+}
+
+.hover-white:hover {
+  background: #fff;
+  color: var(--primaryblue);
+}
+/* Home Page */
+
+.first-intro {
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.502) 100%,
+      rgba(0, 0, 0, 0.5) 100%
+    ),
+    url("../images/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.first-intro .row {
+  height: 90vh;
+}
+
+.second-intro {
+  line-height: 30px;
+}
+
+.second-intro h3, h4 {
+  letter-spacing: 3px;
+}
+
+.image-content {
+  width: 80%;
+  height: 100%;
+}
+
+.first-image {
+  box-shadow: 17px 27px 5px 0px rgba(17, 70, 143, 0.75);
+  -webkit-box-shadow: 17px 27px 5px 0px rgba(17, 70, 143, 0.75);
+  -moz-box-shadow: 17px 27px 5px 0px rgba(17, 70, 143, 0.75);
+}
+
+.second-image {
+  box-shadow: -17px 27px 5px 0px rgba(17, 70, 143, 0.75);
+  -webkit-box-shadow: -17px 27px 5px 0px rgba(17, 70, 143, 0.75);
+  -moz-box-shadow: -17px 27px 5px 0px rgba(17, 70, 143, 0.75);
+}
+
+.editCancelBtn, .editSaveProfileBtn, .editCancelProfileBtn {
+  display: none;
+}
+
+.vh-100 {
+  height: 100vh;
+}
