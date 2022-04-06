@@ -36,6 +36,11 @@ app.use((req, res, next) => {
   res.redirect('/');
   next()
 })
+app.use((err, req, res, next) => {
+  console.log(err.message)
+  res.redirect('/');
+  next();
+})
 
 const PORT = process.env.PORT || 1000;
 
