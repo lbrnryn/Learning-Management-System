@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 // Home Route
 router.get('/', (req, res) => {
@@ -10,6 +11,16 @@ router.get('/', (req, res) => {
   });
 });
 
+router.post('/', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/',
+    failureFlash: true,
+    successFlash: true
+  })(req, res, next);
+})
+
+// Register Route
 router.post('/register', async (req, res, next) => {
   const { email, username, firstname, lastname, password, password2, check } = req.body;
   try {
@@ -50,5 +61,29 @@ router.post('/register', async (req, res, next) => {
     console.log(err);
   }
 })
+
+// Dashboard Route
+router.get('/dashboard', async (req, res, next) => {
+  const usersArr = await User.find({});
+  const users = usersArr.map((user) => {
+    const { _id, email, username, isBasic, isStudent, isAdmin, isTeacher } = user;
+    const fetchUrl = process.env.NODE_ENV == 'development' ? `http://localhost:1000/api/users/${_id}` : `https://icctlms.herokuapp.com/api/users/${_id}`
+    return {
+      _id, email, username, isBasic, isStudent, isAdmin, isTeacher, fetchUrl
+    }
+  })
+  // console.log(users)
+  res.render('dashboard/admin', {
+    title: 'Dashboard - Admin',
+    users
+  });
+})
+
+// Logout Route
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.flash('success', 'Logged Out');
+  res.redirect('/');
+});
 
 module.exports = router;

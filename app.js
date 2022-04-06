@@ -5,6 +5,10 @@ const db = require('./db');
 db();
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+require('./config/passport')(passport);
+const cors = require('cors');
+const methodOverride = require('method-override');
 
 const app = express();
 app.use(express.static('public'));
@@ -24,10 +28,14 @@ app.use((req, res, next)=> {
   res.locals.success = req.flash('success');
 next();
 })
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cors({ origin: '*' }));
+app.use(methodOverride('_method'));
 
 // Routes
 app.use('/', (require('./routes/index')));
-// app.use('/api/users', require('./routes/api/users'));
+app.use('/api/users', require('./routes/api/users'));
 
 // Error handling
 // Working when going to route/s does not exist
