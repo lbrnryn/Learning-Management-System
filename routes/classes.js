@@ -16,8 +16,8 @@ router.get('/', async (req, res, next) => {
       const classesArr = await Class.find({}).populate('section').populate('subject').populate('teacher').populate('student').lean();
       const classes = classesArr.map((singleclass) => {
         const { _id, section, subject, teacher, student, day, timeStart, timeEnd, room } = singleclass;
-        const classesfetchurl = process.env.NODE_ENV == 'development' ? `http://localhost:2000/api/classes/${_id}` : `https://icctlms.herokuapp.com/api/classes/${_id}`;
-        const studentsfetchurl = process.env.NODE_ENV == 'development' ? `http://localhost:2000/api/users/students` : `https://icctlms.herokuapp.com/api/users/students`;
+        const classesfetchurl = process.env.NODE_ENV == 'development' ? `http://localhost:2000/api/classes/${_id}` : `https://lmslbrn.herokuapp.com/api/classes/${_id}`;
+        const studentsfetchurl = process.env.NODE_ENV == 'development' ? `http://localhost:2000/api/users/students` : `https://lmslbrn.herokuapp.com/api/users/students`;
         return { _id, section, subject, teacher, student, day, timeStart, timeEnd, room, classesfetchurl, studentsfetchurl }
       })
 

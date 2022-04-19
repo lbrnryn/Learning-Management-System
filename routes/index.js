@@ -60,7 +60,7 @@ router.get('/dashboard', checkAuthenticated, async (req, res, next) => {
       const usersArr = await User.find({}).lean();
       const users = usersArr.map((user) => {
         const { _id, email, username, isBasic, isStudent, isAdmin, isTeacher } = user;
-        const fetchUrl = process.env.NODE_ENV == 'development' ? `http://localhost:2000/api/users/${_id}` : `https://icctlms.herokuapp.com/api/users/${_id}`
+        const fetchUrl = process.env.NODE_ENV == 'development' ? `http://localhost:2000/api/users/${_id}` : `https://lmslbrn.herokuapp.com/api/users/${_id}`
         return { _id, email, username, isBasic, isStudent, isAdmin, isTeacher, fetchUrl }
       })
 
