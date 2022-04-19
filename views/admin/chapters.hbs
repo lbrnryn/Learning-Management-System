@@ -1,0 +1,38 @@
+{{> dashboardnavbar}}
+
+<div class="container mt-3">
+  <h4>{{subject.title}} ({{subject.code}})</h4>
+  <h5>Chapters</h5>
+
+  <form action="/subjects/{{id}}/chapters?_method=PUT" class="mb-3" method="post">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="Title">
+    </div>
+    <div class="mb-3">
+      <label for="lesson">Lesson</label>
+      <textarea class="form-control form-control-sm" placeholder="Type here the lesson..." id="lesson" name="lesson"></textarea>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Submit">
+  </form>
+
+  <div>
+    <div class="accordion" id="lessons">
+      {{#each subject.chapters}}
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#chapter{{this._id}}">
+            {{this.title}}
+          </button>
+          </h2>
+          <div id="chapter{{this._id}}" class="accordion-collapse collapse" data-bs-parent="#lessons">
+            <div class="accordion-body">
+              {{this.lesson}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+
+</div>

@@ -1,40 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-dark primary-blue">
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
   <div class="container">
     <a class="navbar-brand me-4 d-flex justify-content-around align-items-center" href="/">
-      <div>
-        <img src="images/logo.png" class="img-fluid" width="60" alt="" />
-      </div>
-      <div class="ms-2 border-start border-4 border-danger">
-        <div class="fs-6 fw-bold ms-1">ICCT Colleges</div>
-        <div class="lead fs-6 ms-1">Believe in Yourself</div>
+      <div class="ms-2">
+        <div class="fs-6 fw-bold ms-1">Learning Management System</div>
       </div>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Programs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Courses</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Admissions</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-center align-items-start align-items-lg-center">
+      <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-center align-items-start align-items-lg-center"> -->
+      <ul class="navbar-nav ms-auto d-flex flex-row">
         <li class="nav-item">
 
           <!-- Login Modal -->
-          <button type="button" class="btn text-white px-3 me-3" data-bs-toggle="modal" data-bs-target=#loginModal>Log In</button>
+          <button type="button" class="btn px-3 me-3" data-bs-toggle="modal" data-bs-target=#loginModal>Log In</button>
           <div class="modal fade" id="loginModal">
             <div class="modal-dialog">
               <div class="modal-content text-dark">
@@ -42,17 +22,18 @@
                   <h4 class="modal-title" id="loginModalLabel">Login</h4>
                 </div>
                 <div class="modal-body">
+
                   <form action="/" method="POST" class="validate" novalidate>
                     <div class="form-floating mb-3">
-                      <input type="text" class="form-control" id="username" name="username" placeholder="Username" required />
-                      <label for="username">Username</label>
+                      <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Username" required />
+                      <label for="loginUsername">Username</label>
                       <div class="invalid-feedback">
                         Username is required
                       </div>
                     </div>
                     <div class="form-floating mb-3">
-                      <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
-                      <label for="password">Password</label>
+                      <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Password" required />
+                      <label for="loginPassword">Password</label>
                       <div class="invalid-feedback">
                         Password is required
                       </div>
@@ -68,6 +49,7 @@
                       <i class="bi bi-instagram"></i>
                     </div>
                   </form>
+
                 </div>
               </div>
             </div>
@@ -76,7 +58,7 @@
         <li class="nav-item">
 
           <!-- Register Modal -->
-          <button type="button" class="btn secondary-blue btn-outline-light rounded-pill px-4 py-1" data-bs-toggle="modal" data-bs-target=#registerModal>Register</button>
+          <button type="button" class="btn btn-outline-dark rounded-pill px-4 py-1" data-bs-toggle="modal" data-bs-target=#registerModal>Register</button>
           <div class="modal fade" id="registerModal">
             <div class="modal-dialog">
               <div class="modal-content text-dark">
@@ -84,6 +66,7 @@
                   <h4 class="modal-title" id="registerModalLabel">Register</h4>
                 </div>
                 <div class="modal-body">
+
                   <form action="/register" method="POST" class="validate" novalidate>
                     <div class="form-floating mb-3">
                       <input type="email" class="form-control" id="email" name="email" placeholder="Email" required/>
@@ -93,8 +76,8 @@
                       </div>
                     </div>
                     <div class="form-floating mb-3">
-                      <input type="text" class="form-control" id="username" name="username" placeholder="Username" required/>
-                      <label for="username">Username</label>
+                      <input type="text" class="form-control" id="registerUsername" name="username" placeholder="Username" required/>
+                      <label for="registerUsername">Username</label>
                       <div class="invalid-feedback">
                         Username is required
                       </div>
@@ -114,8 +97,8 @@
                       </div>
                     </div>
                     <div class="form-floating mb-3">
-                      <input type="password" class="form-control" id="password" name="password" placeholder="Password" required/>
-                      <label for="password">Password</label>
+                      <input type="password" class="form-control" id="registerPassword" name="password" placeholder="Password" required/>
+                      <label for="registerPassword">Password</label>
                       <div class="invalid-feedback">
                         Password is required
                       </div>
@@ -135,6 +118,7 @@
                       <button type="submit" class="btn btn-primary">Sign Up</button>
                     </div>
                   </form>
+
                 </div>
               </div>
             </div>

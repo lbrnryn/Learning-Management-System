@@ -6,22 +6,10 @@ const userSchema = new mongoose.Schema({
   password: String,
   firstname: String,
   lastname: String,
-  isBasic: {
-    type: Boolean,
-    default: true
-  },
-  isStudent: {
-    type: Boolean,
-    default: false
-  },
-  isAdmin: {
-    type: Boolean,
-    default: false
-  },
-  isTeacher: {
-    type: Boolean,
-    default: false
-  }
+  isBasic: { type: Boolean, default: true },
+  isStudent: { type: Boolean, default: false },
+  isAdmin: { type: Boolean, default: false },
+  isTeacher: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('User', userSchema);

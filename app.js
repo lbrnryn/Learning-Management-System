@@ -9,10 +9,11 @@ const passport = require('passport');
 require('./config/passport')(passport);
 const cors = require('cors');
 const methodOverride = require('method-override');
+const path = require('path');
 
 const app = express();
 app.use(express.static('public'));
-app.engine('.hbs', engine({ extname: '.hbs' }));
+app.engine('.hbs', engine({ extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.set('views', './views');
 app.set('json spaces', 2);
@@ -35,7 +36,13 @@ app.use(methodOverride('_method'));
 
 // Routes
 app.use('/', (require('./routes/index')));
+app.use('/users', require('./routes/users'));
+app.use('/subjects', require('./routes/subjects'));
+app.use('/classes', require('./routes/classes'));
+
+// API
 app.use('/api/users', require('./routes/api/users'));
+app.use('/api/classes', require('./routes/api/classes'));
 
 // Error handling
 // Working when going to route/s does not exist
@@ -50,6 +57,6 @@ app.use((err, req, res, next) => {
   next();
 })
 
-const PORT = process.env.PORT || 1000;
+const PORT = process.env.PORT || 2000;
 
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));

@@ -1,0 +1,25 @@
+{{> dashboardnavbar}}
+
+<div class="container mt-3">
+  <div class="row">
+
+    {{#each classes}}
+      <div class="col-3">
+        <a href="/subjects/{{this.subject._id}}/chapters" class="text-decoration-none">
+          <div class="card">
+            <div class="card-body text-dark">
+              <h5 class="card-title">{{this.subject.title}} ({{this.subject.code}})</h5>
+              <p class="card-text">{{this.year}} {{this.semester}}</p>
+              <p class="card-text">{{this.day}} | {{this.room}}</p>
+              <p class="card-text">{{this.timeStart}} - {{this.timeEnd}}</p>
+              <p class="card-text">{{this.subject.chapters.length}} Chapters</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    {{/each}}
+
+  </div>
+</div>
+
+{{> messages}}

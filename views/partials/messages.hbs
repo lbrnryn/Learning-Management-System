@@ -2,14 +2,11 @@
   <div class="toast-container position-fixed bottom-0 end-0 removeToast">
     {{#each success}}
     <div class="toast show">
-      <div class="toast-header d-flex justify-content-between align-items-center primary-blue">
-        <img src="./images/logo.png" class="rounded sm-logo me-2" alt="...">
-        <p class="me-auto mb-0 text-white">ICCT Colleges</p>
+      <div class="toast-header d-flex justify-content-between align-items-center bg-primary">
+        <p class="me-auto mb-0 text-white">Leaning Management System</p>
         <button type="button" class="btn-close text-white" data-bs-dismiss="toast"></button>
       </div>
-      <div class="toast-body">
-        {{this}}
-      </div>
+      <div class="toast-body">{{this}}</div>
     </div>
     {{/each}}
   </div>
@@ -20,13 +17,10 @@
     {{#each errors}}
     <div class="toast show">
       <div class="toast-header d-flex justify-content-between bg-danger">
-        <img src="./images/logo.png" class="rounded sm-logo me-2" alt="...">
         <p class="me-auto mb-0 text-white">Error</p>
         <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
       </div>
-      <div class="toast-body">
-        {{this}}
-      </div>
+      <div class="toast-body">{{this}}</div>
     </div>
     {{/each}}
   </div>
@@ -37,13 +31,10 @@
     {{#each error}}
     <div class="toast show">
       <div class="toast-header d-flex justify-content-between bg-danger">
-        <img src="./images/logo.png" class="rounded sm-logo me-2" alt="...">
         <p class="me-auto mb-0 text-white">Error</p>
         <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
       </div>
-      <div class="toast-body">
-        {{this}}
-      </div>
+      <div class="toast-body">{{this}}</div>
     </div>
     {{/each}}
   </div>

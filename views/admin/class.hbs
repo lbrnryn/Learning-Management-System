@@ -1,0 +1,169 @@
+{{> dashboardnavbar}}
+
+<div class="container">
+  <div class="row pt-4">
+
+    <div class="col">
+      <button type="button" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#addSection">Add Section</button>
+      <div id="addSection" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="/classes/sections" method="post">
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col input-group">
+                    <span class="input-group-text">Section</span>
+                    <input type="text" class="form-control" name="name">
+                  </div>
+                </div>
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#addClass">Add Class</button>
+      <div id="addClass" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="/classes" method="post">
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col input-group mb-3">
+                    <label class="input-group-text" for="section">Section</label>
+                    <select class="form-select" name="section">
+                      <option selected>Choose a Section</option>
+                      {{#each sections}}
+                        <option value={{this._id}}>{{this.name}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col input-group mb-3">
+                    <label class="input-group-text" for="subject">Subject</label>
+                    <select class="form-select" name="subject">
+                      <option selected>Choose a Subject...</option>
+                      {{#each subjects}}
+                        <option value={{this._id}}>{{this.title}}({{this.code}})</option>
+                      {{/each}}
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col input-group mb-3">
+                    <label class="input-group-text" for="teacher">Teacher</label>
+                    <select class="form-select" name="teacher">
+                      <option selected>Choose a Teacher...</option>
+                      {{#each teachers}}
+                        <option value={{this._id}}>{{this.firstname}} {{this.lastname}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col input-group">
+                    <span class="input-group-text">Time Start</span>
+                    <input type="text" class="form-control" name="timeStart">
+                  </div>
+                  <div class="col input-group">
+                    <span class="input-group-text">Time End</span>
+                    <input type="text" class="form-control" name="timeEnd">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col input-group">
+                    <label class="input-group-text" for="day">Day</label>
+                    <select class="form-select" name="day">
+                      <option selected>Choose a Day...</option>
+                      <option value="Monday">Monday</option>
+                      <option value="Tuesday">Tuesday</option>
+                      <option value="Wednesday">Wednesday</option>
+                      <option value="Thursday">Thursday</option>
+                      <option value="Friday">Friday</option>
+                      <option value="Saturday">Saturday</option>
+                      <option value="Sunday">Sunday</option>
+                    </select>
+                  </div>
+                  <div class="col input-group">
+                    <span class="input-group-text">Room</span>
+                    <input type="text" class="form-control" name="room">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <h5>Sections</h5>
+        <div class="d-flex flex-wrap gap-3">
+          {{#each sections}}
+            <span class="badge bg-warning">{{this.name}}</span>
+          {{/each}}
+        </div>
+      </div>
+      <div class="table-responsive">
+        <h5>Classes</h5>
+        <table class="table table-sm">
+          <thead>
+            <th>Section</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+            <th>Time | Day</th>
+            <th>Room</th>
+            <th>Students</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+            {{#each classes}}
+            <tr>
+              <td>{{this.section.name}}</td>
+              <td>{{this.subject.title}} ({{this.subject.code}})</td>
+              <td class="text-capitalize">{{this.teacher.firstname}} {{this.teacher.lastname}}</td>
+              <td>{{this.timeStart}} - {{this.timeEnd}} | {{this.day}}</td>
+              <td>{{this.room}}</td>
+              <td>{{this.student.length}}</td>
+              <td>
+                <button type="button" class="badge rounded-pill bg-primary border-0">Edit</button>
+                <button type="button" class="badge rounded-pill bg-danger border-0">Delete</button>
+                <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl={{this.classesfetchurl}} {{#if this.studentfetchurl}}data-studentfetchurl={{this.studentfetchurl}}{{/if}} data-studentsfetchurl={{this.studentsfetchurl}}>Add Student</button>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-3">
+      <p id="section">Section: </p>
+      <p id="subject">Subject: </p>
+      <p id="teacher">Teacher: </p>
+      <p id="timeDay">Time|Day: </p>
+      <p id="room">Room: </p>
+      <form id="addStudentForm" method="post">
+        <input type="hidden" id="classId" name="classId">
+        <input id="searchInput" type="search" class="form-control form-control-sm mb-3" placeholder="Type to search students" disabled>
+        <div class="studentsCheckbox"></div>
+        <div class="d-grid gap-2">
+          <input type="submit" class="btn btn-primary btn-sm addStudentSubmitBtn" value="Submit" disabled>
+          <input type="button" class="btn btn-danger btn-sm addStudentCancelBtn" value="Cancel">
+        </div>
+      </form>
+    </div>
+
+    </div>
+  </div>
+</div>
+
+{{> messages}}

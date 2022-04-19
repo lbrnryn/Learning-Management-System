@@ -1,4 +1,4 @@
-function home() {
+function homePage() {
   // Toast Notification
   const removeToast = document.querySelector('.removeToast');
   document.addEventListener("DOMContentLoaded", () => {
@@ -26,12 +26,11 @@ function home() {
         // console.log(editBtn.dataset.id)
         const fetchUrl = editBtn.dataset.url;
         fetch(fetchUrl)
-        // fetch(`https://icctlms2.herokuapp.com/api/users/${id}`)
           .then(res => res.json())
           .then(data => {
             // console.log(data)
 
-            userForm.action = `/api/users/${data._id}?_method=PUT`; // Set form action
+            userForm.action = `/users/${data._id}?_method=PUT`; // Set form action
             email.disabled = false;
             email.value = data.email;
             username.disabled = false;
@@ -110,6 +109,4 @@ function home() {
 }
 
 
-export {
-  home
-}
+export { homePage }
