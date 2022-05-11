@@ -1,8 +1,8 @@
 const express = require('express');
-const { engine } = require('express-handlebars');
+const { create } = require('express-handlebars');
 require('dotenv').config();
-const db = require('./db');
-db();
+const { mongoosedb } = require('./db');
+mongoosedb();
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -12,8 +12,12 @@ const methodOverride = require('method-override');
 const path = require('path');
 
 const app = express();
+const hbs = create({
+  extname: '.hbs',
+  runtimeOptions: { allowProtoPropertiesByDefault: true }
+})
 app.use(express.static('public'));
-app.engine('.hbs', engine({ extname: '.hbs'}));
+app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 app.set('views', './views');
 app.set('json spaces', 2);
@@ -39,10 +43,12 @@ app.use('/', (require('./routes/index')));
 app.use('/users', require('./routes/users'));
 app.use('/subjects', require('./routes/subjects'));
 app.use('/classes', require('./routes/classes'));
+app.use('/chapters', require('./routes/chapters'));
 
 // API
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/classes', require('./routes/api/classes'));
+app.use('/api/chapters', require('./routes/api/chapters'));
 
 // Error handling
 // Working when going to route/s does not exist

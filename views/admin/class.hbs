@@ -4,27 +4,6 @@
   <div class="row pt-4">
 
     <div class="col">
-      <button type="button" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#addSection">Add Section</button>
-      <div id="addSection" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <form action="/classes/sections" method="post">
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col input-group">
-                    <span class="input-group-text">Section</span>
-                    <input type="text" class="form-control" name="name">
-                  </div>
-                </div>
-              </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-            </div>
-          </form>
-          </div>
-        </div>
-      </div>
 
       <button type="button" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#addClass">Add Class</button>
       <div id="addClass" class="modal fade" tabindex="-1">
@@ -34,13 +13,8 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col input-group mb-3">
-                    <label class="input-group-text" for="section">Section</label>
-                    <select class="form-select" name="section">
-                      <option selected>Choose a Section</option>
-                      {{#each sections}}
-                        <option value={{this._id}}>{{this.name}}</option>
-                      {{/each}}
-                    </select>
+                    <span class="input-group-text">Section</span>
+                    <input type="text" class="form-control" name="section">
                   </div>
                 </div>
                 <div class="row">

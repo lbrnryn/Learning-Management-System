@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
   isBasic: { type: Boolean, default: true },
   isStudent: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },
-  isTeacher: { type: Boolean, default: false }
+  isTeacher: { type: Boolean, default: false },
+  avatarUrl: String
 });
 
 module.exports = mongoose.model('User', userSchema);

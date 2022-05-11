@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/User');
 const Subject = require('../models/Subject');
+const Chapter = require('../models/Chapter');
 const { checkAuthenticated } = require('../middleware.js');
 
 // Subjects Page - GET /subjects
@@ -20,7 +22,10 @@ router.get('/', checkAuthenticated, async (req, res, next) => {
       const thirdTrimester = semester == "3rd Trimester" ? true: false;
       return { _id, year, semester, code, title, units, prerequisite, firstYear, secondYear, thirdYear, fourthYear, firstTrimester, secondTrimester, thirdTrimester }
     });
-    res.render('admin/subject', { title: 'Subjects - Admin', subjects, admin: true });
+
+    const user = await User.findById({ _id: req.user._id });
+    res.render('admin/subject', { title: 'Subjects - Admin', subjects, admin: true, user });
+
   } catch (err) { next(err) }
 });
 
@@ -38,25 +43,34 @@ router.post('/', async (req, res, next) => {
 router.get('/:id/chapters', async (req, res, next) => {
   try {
 
-    if (req.user.isAdmin) {
-      const subject = await Subject.findById({ _id: req.params.id}).lean();
-      res.render('admin/chapters', { id: req.params.id, subject, admin: true });
-    }
-
+    // if (req.user.isAdmin) {
+    //   const subject = await Subject.findById({ _id: req.params.id}).lean();
+    //   res.render('admin/chapters', { id: req.params.id, subject, admin: true });
+    // } else {
+    //   const subject = await Subject.findById({ _id: req.params.id}).lean();
+    //   res.render('student/chapters', { subject })
+    // }
     const subject = await Subject.findById({ _id: req.params.id}).lean();
-    res.render('student/chapters', { subject })
+    const chapters = await Chapter.find({ subject: req.params.id })
+    const user = await User.findById({ _id: req.user._id });
+    // console.log(subject)
+    res.render('student/chapters', { subject, chapters, user });
+
   } catch (err) { next(err) }
 });
 
-// Chapter Page - Create single lesson-  PUT /subjects/:id/chapters
-router.put('/:id/chapters', async (req, res, next) => {
-  try {
-    const { title, lesson } = req.body;
-    const newChapter = await Subject.findByIdAndUpdate({ _id: req.params.id }, {
-      $addToSet: { chapters: { title: title, lesson: lesson } }
-    });
-    res.redirect(`/subjects/${req.params.id}/chapters`)
-  } catch (err) { next(err) }
-});
+// // Chapter Page - Create single lesson-  PUT /subjects/:id/chapters
+// router.put('/:id/chapters', async (req, res, next) => {
+//   try {
+//     const { title, lesson } = req.body;
+//     // const newChapter = await Subject.findByIdAndUpdate({ _id: req.params.id }, {
+//     //   $addToSet: { chapters: { title: title, lesson: lesson } }
+//     // });
+//     const newChapter = await Subject.findOneAndUpdate({ _id: req.params.id }, {
+//       $push: { chapters: { title: title, lesson: lesson } }
+//     });
+//     res.redirect(`/subjects/${req.params.id}/chapters`)
+//   } catch (err) { next(err) }
+// });
 
 module.exports = router;

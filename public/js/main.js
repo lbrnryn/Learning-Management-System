@@ -222,3 +222,33 @@ if (addStudentCancelBtn) {
     studentsCheckbox.innerHTML = "";
   })
 }
+
+const selectSubject = document.getElementById("selectSubject");
+const chaptersContainer = document.getElementById("chaptersContainer");
+if (selectSubject) {
+  selectSubject.addEventListener('change', () => {
+    fetch(`http://localhost:2000/api/chapters/${selectSubject.value}`)
+      .then(res => res.json())
+      .then(data => {
+        // console.log(data)
+        let output = "";
+        data.forEach((data) => {
+          output += `
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#subject${data._id}">
+              ${data.title}
+            </button>
+            </h2>
+            <div id="subject${data._id}" class="accordion-collapse collapse" data-bs-parent="#chaptersContainer">
+              <div class="accordion-body">
+                ${data.markedHtml}
+              </div>
+            </div>
+          </div>
+          `
+        });
+        chaptersContainer.innerHTML = output;
+      })
+  })
+}

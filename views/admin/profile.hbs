@@ -1,0 +1,22 @@
+{{> dashboardnavbar}}
+
+<div class="container mt-5">
+  <form action="/users/avatar" class="w-50 mb-3" method="post" enctype="multipart/form-data">
+    <div class="d-flex">
+      <input type="file" class="form-control form-control-sm" name="avatar">
+      <input type="submit" class="btn btn-secondary btn-sm" value="Upload">
+      <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+    </div>
+  </form>
+  <form class="w-25" action="/users/profile" method="post">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="text" class="form-control form-control-sm" id="email" name="email" value={{user.email}}>
+    </div>
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" class="form-control form-control-sm" id="username" name="username" value={{user.username}}>
+    </div>
+    <input type="submit" class="btn btn-primary btn-sm" value="Submit">
+  </form>
+</div>

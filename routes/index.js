@@ -54,7 +54,8 @@ router.post('/register', async (req, res, next) => {
 router.get('/dashboard', checkAuthenticated, async (req, res, next) => {
   try {
     if (req.user.isBasic) {
-      res.render('notverified');
+      const user = await User.findById({ _id: req.user._id });
+      res.render('notverified', { user });
     }
     if (req.user.isAdmin) {
       const usersArr = await User.find({}).lean();
@@ -64,11 +65,13 @@ router.get('/dashboard', checkAuthenticated, async (req, res, next) => {
         return { _id, email, username, isBasic, isStudent, isAdmin, isTeacher, fetchUrl }
       })
 
-      res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true });
+      const user = await User.findById({ _id: req.user._id });
+      res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true, user });
     }
 
     if (req.user.isStudent) {
-      res.render('student/dashboard', { title: 'Dashboard - Student' });
+      const user = await User.findById({ _id: req.user._id });
+      res.render('student/dashboard', { title: 'Dashboard - Student', user });
     }
 
   } catch (err) { next(err) }

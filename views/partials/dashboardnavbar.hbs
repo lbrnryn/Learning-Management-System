@@ -25,11 +25,15 @@
     </div>
 
     <div class="btn-group d-none d-lg-flex">
-      <button class="border-0 bg-transparent" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
-        <img id="profilePic" class="img-fluid me-2 rounded-circle" width="40" src='../../images/hitman.jpg'>
+      <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
+        {{#if user.avatarUrl}}
+          <img id="profilePic" class="img-fluid rounded-circle" width="30" src='/users/avatar/{{user.avatarUrl}}'>
+        {{else}}
+          <i class="bi bi-person-circle fs-4"></i>
+        {{/if}}
       </button>
       <ul class="dropdown-menu dropdown-menu-lg-end">
-        <li><a class="dropdown-item" href="#"><i class="bi bi-bell-fill"></i>Profile</a></li>
+        <li><a class="dropdown-item" href="/users/profile"><i class="bi bi-bell-fill"></i>Profile</a></li>
         <li><a class="dropdown-item" href="/settings"><i class="bi bi-gear-fill"></i></i>Settings</a></li>
         <li><a class="dropdown-item" href="/logout"><i class="bi bi-arrow-right-square-fill"></i>Logout</a></li>
       </ul>
