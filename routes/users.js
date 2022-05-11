@@ -8,7 +8,7 @@ const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 
-const conn = mongoose.createConnection('mongodb://localhost:27017/icctlms');
+const conn = mongoose.createConnection(process.env.NODE_ENV == 'development' ? 'mongodb://127.0.0.1:27017/icctlms' : process.env.MONGO_URI);
 let gfs, gridfsBucket;
 conn.once('open', () => {
   gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
