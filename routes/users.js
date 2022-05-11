@@ -19,7 +19,7 @@ conn.once('open', () => {
 });
 
 const storage = new GridFsStorage({
-  url: 'mongodb://localhost:27017/icctlms',
+  url: process.env.NODE_ENV == 'development' ? 'mongodb://127.0.0.1:27017/icctlms' : process.env.MONGO_URI,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
