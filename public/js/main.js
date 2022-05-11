@@ -227,7 +227,7 @@ const selectSubject = document.getElementById("selectSubject");
 const chaptersContainer = document.getElementById("chaptersContainer");
 if (selectSubject) {
   selectSubject.addEventListener('change', () => {
-    fetch(`http://localhost:2000/api/chapters/${selectSubject.value}`)
+    fetch(`https://lmslbrn.herokuapp.com/api/chapters/${selectSubject.value}`)
       .then(res => res.json())
       .then(data => {
         // console.log(data)
