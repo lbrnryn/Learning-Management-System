@@ -9,33 +9,18 @@ router.get('/', async (req, res, next) => {
     const subjects = await Subject.find({})
     const chapters = await Chapter.find({}).populate('subject')
     const user = await User.findById({ _id: req.user._id });
-    // const subjectsArr = await Subject.find({})
-    // const chaptersArr = await Chapter.find({}).populate('subject')
-    // const user = await User.findById({ _id: req.user._id });
-    //
-    // const subjects = subjectsArr.map((subject) => {
-    //   const chapters = chaptersArr.filter((chapter) => {
-    //     if (chapter.subject._id == subject._id) {
-    //       return chapter
-    //     }
-    //   })
-    //   subject.chapters = chapters;
-    //   return subject
-    // })
-    // console.log(subjects)
-    console.log(chapters)
-    res.render('admin/chapters', { subjects, user });
+
+    const fetchUrl = process.env.NODE_ENV == 'development' ? "http://localhost:2000/api/chapters" : "https://lmslbrn.herokuapp.com/api/chapters"
+    res.render('admin/chapters', { subjects, user, admin: true, fetchUrl});
   } catch (err) { next(err) }
 });
 
 router.post('/', async (req, res, next) => {
   try {
-    // console.log(req.body);
     const { subject, title, lesson } = req.body;
     const newChapter = await Chapter.create({
       subject, title, lesson
     })
-    // console.log(newChapter)
     res.redirect('/chapters')
   } catch (err) { next(err) }
 })

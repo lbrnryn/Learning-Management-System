@@ -1,9 +1,9 @@
 {{> dashboardnavbar}}
 
-<div class="container">
+<div class="container-lg">
   <div class="row pt-4">
 
-    <div class="col">
+    <div class="col-md-9">
 
       <button type="button" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#addClass">Add Class</button>
       <div id="addClass" class="modal fade" tabindex="-1">
@@ -101,13 +101,13 @@
           <tbody>
             {{#each classes}}
             <tr>
-              <td>{{this.section.name}}</td>
-              <td>{{this.subject.title}} ({{this.subject.code}})</td>
-              <td class="text-capitalize">{{this.teacher.firstname}} {{this.teacher.lastname}}</td>
-              <td>{{this.timeStart}} - {{this.timeEnd}} | {{this.day}}</td>
-              <td>{{this.room}}</td>
+              <td class="text-nowrap">{{this.section.name}}</td>
+              <td class="text-nowrap">{{this.subject.title}} ({{this.subject.code}})</td>
+              <td class="text-capitalize text-nowrap">{{this.teacher.firstname}} {{this.teacher.lastname}}</td>
+              <td class="text-nowrap">{{this.timeStart}} - {{this.timeEnd}} | {{this.day}}</td>
+              <td class="text-nowrap">{{this.room}}</td>
               <td>{{this.student.length}}</td>
-              <td>
+              <td class="d-flex">
                 <button type="button" class="badge rounded-pill bg-primary border-0">Edit</button>
                 <button type="button" class="badge rounded-pill bg-danger border-0">Delete</button>
                 <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl={{this.classesfetchurl}} {{#if this.studentfetchurl}}data-studentfetchurl={{this.studentfetchurl}}{{/if}} data-studentsfetchurl={{this.studentsfetchurl}}>Add Student</button>
@@ -119,7 +119,7 @@
       </div>
     </div>
 
-    <div class="col-3">
+    <div class="col-md-3">
       <p id="section">Section: </p>
       <p id="subject">Subject: </p>
       <p id="teacher">Teacher: </p>

@@ -224,10 +224,13 @@ if (addStudentCancelBtn) {
 }
 
 const selectSubject = document.getElementById("selectSubject");
+const selectSubjectUrl = document.getElementById("selectSubjectUrl");
 const chaptersContainer = document.getElementById("chaptersContainer");
 if (selectSubject) {
   selectSubject.addEventListener('change', () => {
-    fetch(`https://lmslbrn.herokuapp.com/api/chapters/${selectSubject.value}`)
+    // console.log(selectSubjectUrl.dataset.url)
+    // console.log(`${selectSubjectUrl}/${selectSubject.value}`)
+    fetch(`${selectSubjectUrl.value}/${selectSubject.value}`)
       .then(res => res.json())
       .then(data => {
         // console.log(data)

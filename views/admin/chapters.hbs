@@ -1,9 +1,8 @@
 {{> dashboardnavbar}}
 
-<div class="container mt-3">
-  <!-- <h4>{{subject.title}} ({{subject.code}})</h4> -->
+<div class="container-lg mt-3">
   <h5>Chapters</h5>
-
+  <input type="hidden" id="selectSubjectUrl" value={{fetchUrl}}>
   <form action="/chapters" class="mb-3" method="post">
     <select id="selectSubject" class="form-select form-select-sm mb-3" name="subject">
       <option selected>Choose Subject</option>
@@ -20,57 +19,11 @@
       <p class="text-muted">(Note: You can also type html tags with/without inline css styles)</p>
       <textarea class="form-control form-control-sm" placeholder="Type here the lesson..." id="lesson" name="lesson"></textarea>
     </div>
-    <input type="submit" class="btn btn-primary" value="Submit">
+    <input type="submit" class="btn btn-primary btn-sm" value="Submit">
   </form>
 
   <div>
-    <!-- <div class="accordion" id="lessons">
-      {{#each chapters}}
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#chapter{{this._id}}">
-            {{this.title}}
-          </button>
-          </h2>
-          <div id="chapter{{this._id}}" class="accordion-collapse collapse" data-bs-parent="#lessons">
-            <div class="accordion-body">
-              {{{this.markedHtml}}}
-            </div>
-          </div>
-        </div>
-      {{/each}}
-    </div> -->
-    <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-      {{#each chapters}}
-        <li class="nav-item" role="presentation">
-          <button type="button" class="nav-link" id="pills-{{this._id}}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{this._id}}" role="tab">{{this.title}}</button>
-        </li>
-      {{/each}}
-    </ul>
-    <div class="tab-content" id="pills-tabContent">
-      {{#each chapters}}
-        <div class="tab-pane fade" id="pills-{{this._id}}" role="tabpanel">
-          {{{this.markedHtml}}}
-        </div>
-      {{/each}}
-    </div> -->
-
-    <div id="chaptersContainer" class="accordion">
-      <!-- {{#each subjects}}
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#subject{{this._id}}">
-            {{this.title}}
-          </button>
-          </h2>
-          <div id="subject{{this._id}}" class="accordion-collapse collapse" data-bs-parent="#chaptersContainer">
-            <div class="accordion-body">
-
-            </div>
-          </div>
-        </div>
-      {{/each}} -->
-    </div>
+    <div id="chaptersContainer" class="accordion"></div>
   </div>
 
 </div>

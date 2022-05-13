@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
-  <div class="container">
+  <div class="container-lg">
     <div class="d-none d-lg-flex align-items-center">
       <a class="navbar-brand me-4 d-flex justify-content-around align-items-center" href="/post">
         <div class="ms-2">
@@ -41,15 +41,35 @@
 
     <div class="d-lg-none">
       <button class="border-0 bg-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
-        <img id="profilePic" class="img-fluid me-2 rounded-circle" width="40" src='./images/hitman.jpg'>
+        {{#if user.avatarUrl}}
+          <img id="profilePic" class="img-fluid rounded-circle" width="30" src='/users/avatar/{{user.avatarUrl}}'>
+        {{else}}
+          <i class="bi bi-person-circle fs-4"></i>
+        {{/if}}
       </button>
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu">
         <div class="d-flex align-items-center p-2">
-          <img id="profilePic" class="img-fluid me-2 rounded-circle" width="40" src='./images/hitman.jpg'>
+          {{#if user.avatarUrl}}
+            <img id="profilePic" class="img-fluid rounded-circle" width="30" src='/users/avatar/{{user.avatarUrl}}'>
+          {{else}}
+            <i class="bi bi-person-circle fs-4"></i>
+          {{/if}}
           <p>Student Name</p>
         </div>
         <ul class="list-group">
-          <li class="list-group-item border-0"><a class="dropdown-item" href="#"><i class="bi bi-bell-fill"></i>Profile</a></li>
+          <li class="list-group-item border-0">
+            <a class="dropdown-item" href="/dashboard"><i class="bi bi-house-door-fill me-2"></i>Dashboard</a>
+          </li>
+          {{#if admin}}
+            <li class="list-group-item border-0">
+              <a class="dropdown-item" href="/subjects"><i class="bi bi-journals me-2"></i>Subjects</a>
+            </li>
+          {{/if}}
+          <li class="list-group-item border-0">
+            <a class="dropdown-item" href="/classes"><i class="bi bi-book me-2"></i>Classes</a>
+          </li>
+          <hr>
+          <li class="list-group-item border-0"><a class="dropdown-item" href="/users/profile"><i class="bi bi-bell-fill"></i>Profile</a></li>
           <li class="list-group-item border-0"><a class="dropdown-item" href="/settings"><i class="bi bi-gear-fill"></i></i>Settings</a></li>
           <li class="list-group-item border-0"><a class="dropdown-item" href="/logout"><i class="bi bi-arrow-right-square-fill"></i>Logout</a></li>
         </ul>
