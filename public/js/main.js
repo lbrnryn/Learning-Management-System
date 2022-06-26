@@ -300,7 +300,7 @@ if (chapter1quiz) {
         .then(data => {
           console.log(data);
           const answers = data.map((data) => data.answer);
-
+          console.log(answers)
           if (inputRadioBtns) {
             inputRadioBtns.forEach((inputRadioBtn) => {
               // if (inputRadioBtn.checked && answers.indexOf(inputRadioBtn.value) !== -1) {
