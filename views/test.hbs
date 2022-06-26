@@ -1,0 +1,15 @@
+<form action="/myquiz" method="post">
+  {{#each chapter.quizzes}}
+    <div class="mb-5">
+      <p>{{this.title}}: {{this.question}}</p>
+      <p>Answer: {{this.answer}}</p>
+      {{#each this.choices}}
+      <input type="radio" id={{this.order}} name={{this.title}} value={{this.value}}>
+      <label for={{this.order}}>{{this.value}}</label>
+      {{/each}}
+    </div>
+  {{/each}}
+  <br>
+  <br>
+  <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+</form>

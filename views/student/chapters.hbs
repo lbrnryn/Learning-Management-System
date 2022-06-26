@@ -28,6 +28,75 @@
   <div class="tab-content" id="pills-tabContent">
     {{#each chapters}}
       <div class="tab-pane fade" id="pills-{{this._id}}" role="tabpanel">
+        <div class="d-grid gap-2 d-flex justify-content-end">
+
+          <button type="button" class="badge bg-primary border-0" data-bs-toggle="modal" data-bs-target="#quizModal">Quiz</button>
+          <div class="modal fade" id="quizModal" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  {{this.subject.title}} | {{this.title}} - Quiz
+                </div>
+
+                {{#if this.quiz.isQuizAnswered}}
+                  <div class="modal-footer justify-content-start">
+                    Score: {{this.quiz.score}}/{{this.quiz.questionsLength}}
+                  </div>
+                {{else}}
+                  <div class="modal-footer">
+                    <a href="/questions/quiz/chapter/{{this._id}}" class="btn btn-sm btn-primary">Take Quiz</a>
+                  </div>
+                {{/if}}
+
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="badge bg-primary border-0" data-bs-toggle="modal" data-bs-target="#pretestModal">Pre Test</button>
+          <div class="modal fade" id="pretestModal" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  {{this.subject.title}} | {{this.title}} - Pre Test
+                </div>
+
+                {{#if this.pretest.isPretestAnswered}}
+                  <div class="modal-footer justify-content-start">
+                    Score: {{this.pretest.score}}/{{this.pretest.questionsLength}}
+                  </div>
+                {{else}}
+                  <div class="modal-footer">
+                    <a href="/questions/pretest/chapter/{{this._id}}" class="btn btn-sm btn-primary">Take Pre Test</a>
+                  </div>
+                {{/if}}
+
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="badge bg-primary border-0" data-bs-toggle="modal" data-bs-target="#posttestModal">Post Test</button>
+          <div class="modal fade" id="posttestModal" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  {{this.subject.title}} | {{this.title}} - Post Test
+                </div>
+
+                {{#if this.posttest.isPosttestAnswered}}
+                  <div class="modal-footer justify-content-start">
+                    Score: {{this.posttest.score}}/{{this.posttest.questionsLength}}
+                  </div>
+                {{else}}
+                  <div class="modal-footer">
+                    <a href="/questions/posttest/chapter/{{this._id}}" class="btn btn-sm btn-primary">Take Post Test</a>
+                  </div>
+                {{/if}}
+
+              </div>
+            </div>
+          </div>
+
+        </div>
         {{{this.markedHtml}}}
       </div>
     {{/each}}

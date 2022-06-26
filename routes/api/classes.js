@@ -10,6 +10,10 @@ router.get('/', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
+router.post('/', async (req, res) => {
+  console.log(req.body)
+})
+
 // Gets single class - GET /api/classes/:id
 router.get('/:id', async (req, res, next) => {
   try {

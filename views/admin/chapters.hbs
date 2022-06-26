@@ -1,29 +1,64 @@
 {{> dashboardnavbar}}
 
-<div class="container-lg mt-3">
-  <h5>Chapters</h5>
-  <input type="hidden" id="selectSubjectUrl" value={{fetchUrl}}>
-  <form action="/chapters" class="mb-3" method="post">
-    <select id="selectSubject" class="form-select form-select-sm mb-3" name="subject">
-      <option selected>Choose Subject</option>
-      {{#each subjects}}
-        <option value={{this._id}}>{{this.title}} {{this.code}}</option>
-      {{/each}}
-    </select>
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="Title">
-    </div>
-    <div class="mb-3">
-      <label for="lesson">Lesson</label>
-      <p class="text-muted">(Note: You can also type html tags with/without inline css styles)</p>
-      <textarea class="form-control form-control-sm" placeholder="Type here the lesson..." id="lesson" name="lesson"></textarea>
-    </div>
-    <input type="submit" class="btn btn-primary btn-sm" value="Submit">
-  </form>
+<div class="p-2 mt-3 row">
 
-  <div>
-    <div id="chaptersContainer" class="accordion"></div>
+  <div class="col-5">
+    <form action="/chapters/subject/{{subject._id}}" class="" method="post">
+      <h5>Chapters</h5>
+      <input type="hidden" id="selectSubjectUrl" value={{fetchUrl}}>
+      {{subject.code}}
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="Title" required>
+      </div>
+      <div class="mb-3">
+        <label for="lesson">Lesson</label>
+        <p class="small text-muted">(Note: You can also type html tags with/without inline css styles)</p>
+        <textarea class="form-control form-control-sm" placeholder="Type here the lesson..." id="lesson" name="lesson" required></textarea>
+      </div>
+      <input type="submit" class="btn btn-primary btn-sm" value="Add Chapter">
+    </form>
+  </div>
+
+  <div id="chaptersContainer" class="col">
+    {{#if chapters}}
+      {{#each chapters}}
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#chapter{{this._id}}">
+              {{this.title}}
+            </button>
+          </h2>
+          <div id="chapter{{this._id}}" class="accordion-collapse collapse" data-bs-parent="#chaptersContainer">
+            <div class="accordion-body">
+              <!-- <p>{{this._id}}</p> -->
+              <div class="d-flex justify-content-between mb-5">
+                <div class="d-flex align-items-center gap-1">
+                  <button type="button" class="badge bg-success border-0"><i class="bi bi-pencil"></i></button>
+                  <form class="delChapterForm" action="/chapters/{{this._id}}?_method=DELETE" method="post">
+                    <input type="hidden" name="subjectId" value="{{this.subject}}">
+                    <button type="submit" class="badge bg-danger border-0"><i class="bi bi-trash"></i></button>
+                  </form>
+                </div>
+                <div class="">
+                  <!-- <a href="/chapters/{{this.id}}/quiz" class="badge bg-primary text-decoration-none">Add Quiz</a> -->
+                  <!-- <a href="/quizQuestions/chapter/{{this.id}}" class="badge bg-primary text-decoration-none">Add Quiz</a> -->
+                  <a href="/questions/quiz/chapter/{{this.id}}" class="badge bg-primary text-decoration-none">Add Quiz</a>
+                  <a href="/questions/pretest/chapter/{{this.id}}" class="badge bg-primary text-decoration-none">Add Pre Test</a>
+                  <a href="/questions/posttest/chapter/{{this.id}}" class="badge bg-primary text-decoration-none">Add Post Test</a>
+                  <!-- <a href="/questions/exam/chapter/{{this.id}}" class="badge bg-primary text-decoration-none">Add Exam</a> -->
+                </div>
+              </div>
+              {{{this.markedHtml}}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    {{else}}
+      No Chapters Available
+    {{/if}}
   </div>
 
 </div>
+
+{{> messages}}

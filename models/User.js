@@ -10,7 +10,28 @@ const userSchema = new mongoose.Schema({
   isStudent: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },
   isTeacher: { type: Boolean, default: false },
-  avatarUrl: String
+  avatarUrl: String,
+  quizzes: [{
+    // chapter: { type: mongoose.Schema.Types.ObjectId, ref: 'Chapter' },
+    questionsLength: Number,
+    chapter: String,
+    score: Number,
+    isQuizAnswered: Boolean
+  }],
+  pretests: [{
+    // chapter: { type: mongoose.Schema.Types.ObjectId, ref: 'Chapter' },
+    questionsLength: Number,
+    chapter: String,
+    score: Number,
+    isPretestAnswered: Boolean
+  }],
+  posttests: [{
+    // chapter: { type: mongoose.Schema.Types.ObjectId, ref: 'Chapter' },
+    questionsLength: Number,
+    chapter: String,
+    score: Number,
+    isPosttestAnswered: Boolean
+  }]
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -28,6 +28,7 @@ router.get('/', async (req, res, next) => {
       const teachers = users.filter(user => user.isTeacher);
       const students = users.filter(user => user.isStudent);
       // console.log(classesArr)
+      // console.log(sections)
 
       const user = await User.findById({ _id: req.user._id });
       res.render('admin/class', { title: 'Class - Admin', sections, classes, subjects, teachers, students, admin: true, user })
@@ -35,8 +36,9 @@ router.get('/', async (req, res, next) => {
 
     // If logger is student
     if (req.user.isStudent) {
-      const classesArr = await Class.find({ student: { _id: req.user._id } }).populate('subject').populate('student').lean();
-      const classes = classesArr.map(singleclass => singleclass);
+      // const classesArr = await Class.find({ student: { _id: req.user._id } }).populate('subject').populate('student').lean();
+      // const classes = classesArr.map(singleclass => singleclass);
+      const classes = await Class.find({ student: { _id: req.user._id } }).populate('subject').populate('student');
       const user = await User.findById({ _id: req.user._id });
       res.render('student/class', { title: 'Class - Student', classes, user })
     }

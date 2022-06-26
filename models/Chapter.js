@@ -4,11 +4,20 @@ const createDomPurify = require('dompurify')
 const { JSDOM } = require('jsdom')
 const dompurify = createDomPurify(new JSDOM().window)
 
+// const quizSchema = new mongoose.Schema({
+//   title: String,
+//   question: String,
+//   choices: [{ title: String, order: String, value: String }],
+//   answer: String,
+//   dueDate: String
+// });
+
 const chapterSchema = new mongoose.Schema({
   subject: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
   title: String,
   lesson: String,
-  markedHtml: String
+  markedHtml: String,
+  // quiz: [quizSchema]
 });
 
 chapterSchema.pre('validate', function(next) {

@@ -28,4 +28,19 @@ router.get('/:id', checkAuthenticated, async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
+// Updates users quiz score - PUT /api/users/:id
+router.put('/:id', async (req, res, next) => {
+  try {
+    // console.log(req.params.id)
+    console.log(req.body)
+    // const { chapterId, score } = req.body;
+    // await User.findByIdAndUpdate({ _id: req.params.id }, {
+    //   $push: { quizzes: {
+    //     chapter: chapterId,
+    //     score: score
+    //   } }
+    // })
+  } catch (err) { console.log(err.message) }
+});
+
 module.exports = router;

@@ -24,12 +24,12 @@ router.get('/', checkAuthenticated, async (req, res, next) => {
     });
 
     const user = await User.findById({ _id: req.user._id });
-    res.render('admin/subject', { title: 'Subjects - Admin', subjects, admin: true, user });
+    res.render('admin/subjects', { title: 'Subjects - Admin', subjects, admin: true, user });
 
   } catch (err) { next(err) }
 });
 
-// Subjects Page - Creates a Subject - POST /subjects
+// Creates single subject - POST /subjects
 router.post('/', async (req, res, next) => {
   try {
     const { year, semester, code, title, units, prerequisite } = req.body;
@@ -39,38 +39,56 @@ router.post('/', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
-// Chapter Page - GET /subjects/:id/chapters
-router.get('/:id/chapters', async (req, res, next) => {
-  try {
-
-    // if (req.user.isAdmin) {
-    //   const subject = await Subject.findById({ _id: req.params.id}).lean();
-    //   res.render('admin/chapters', { id: req.params.id, subject, admin: true });
-    // } else {
-    //   const subject = await Subject.findById({ _id: req.params.id}).lean();
-    //   res.render('student/chapters', { subject })
-    // }
-    const subject = await Subject.findById({ _id: req.params.id}).lean();
-    const chapters = await Chapter.find({ subject: req.params.id })
-    const user = await User.findById({ _id: req.user._id });
-    // console.log(subject)
-    res.render('student/chapters', { subject, chapters, user });
-
-  } catch (err) { next(err) }
-});
-
-// // Chapter Page - Create single lesson-  PUT /subjects/:id/chapters
-// router.put('/:id/chapters', async (req, res, next) => {
+// // GET - /subjects/chapters/:id/quizzes
+// router.get('/chapters/:id/quizzes', async (req, res) => {
 //   try {
-//     const { title, lesson } = req.body;
-//     // const newChapter = await Subject.findByIdAndUpdate({ _id: req.params.id }, {
-//     //   $addToSet: { chapters: { title: title, lesson: lesson } }
-//     // });
-//     const newChapter = await Subject.findOneAndUpdate({ _id: req.params.id }, {
-//       $push: { chapters: { title: title, lesson: lesson } }
+//     const chapter = await Chapter.findById({ _id: req.params.id }).lean();
+//     const user = await User.findById({ _id: req.user._id })
+//
+//     user.quizzes.forEach((quiz) => {
+//       if (quiz.chapter === req.params.id) {
+//         return chapter.isTaken = true, chapter.score = quiz.score
+//       }
 //     });
-//     res.redirect(`/subjects/${req.params.id}/chapters`)
+//
+//     res.render('student/quiz', { chapter, userId: req.user._id })
 //   } catch (err) { next(err) }
+// });
+
+// // Subject Quizzes Page - GET /subjects/:id/quizzes
+// router.get('/:id/quizzes', async (req, res) => {
+//   try {
+//     // console.log(req.params.id)
+//     const chapters = await Chapter.find({ subject: req.params.id });
+//     const subject = await Subject.findById({ _id: req.params.id });
+//     const user = await User.findById({ _id: req.user._id });
+//     // console.log(subject);
+//     // console.log(chapters)
+//     // console.log(chapters.quizzes)
+//     res.render('admin/quizzes', { subject, chapters, user, admin: true })
+//   } catch (err) { console.log(err.message) }
+// });
+//
+// // PUT /subjects/:id/quizzes
+// router.put('/:id/quizzes', async (req, res) => {
+//   try {
+//     const { title, question, order, value, answer } = req.body;
+//     const chapter = await Chapter.findOneAndUpdate(
+//       { subject: req.params.id },
+//       { $push: { quiz: {
+//         title: title,
+//         question: question,
+//         choices: [
+//           { title: title, order: `${title.toLowerCase()}${order[0]}`, value: value[0] },
+//           { title: title, order: `${title.toLowerCase()}${order[1]}`, value: value[1] },
+//           { title: title, order: `${title.toLowerCase()}${order[2]}`, value: value[2] },
+//           { title: title, order: `${title.toLowerCase()}${order[3]}`, value: value[3] },
+//         ],
+//         answer: answer
+//       } } });
+//     // console.log(req.body)
+//     res.redirect(`/subjects/${req.params.id}/quizzes`);
+//   } catch (err) { console.log(err.message) }
 // });
 
 module.exports = router;

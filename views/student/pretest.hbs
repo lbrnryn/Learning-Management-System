@@ -1,0 +1,62 @@
+{{> dashboardnavbar}}
+
+<div class="container my-5">
+  <h1 class="mb-4">{{chapter.title}} Pre Test</h1>
+  <div class="">
+    <input type="text" id="chapterId" value={{chapter._id}}>
+    <!-- <input type="text" id="quizUrl" value="http://localhost:2000/api/chapters/{{chapter._id}}/quiz"> -->
+    <!-- <input type="text" id="quizUrl" value="http://localhost:2000/api/quizQuestions/chapter/{{chapter._id}}"> -->
+    <!-- <input type="text" id="url1" value="http://localhost:2000/api/questions/pretest/chapter/{{chapter._id}}"> -->
+    <!-- <input type="text" id="url2" value="http://localhost:2000/users/pretests"> -->
+    <input type="text" id="url1" value="{{url1}}">
+    <input type="text" id="url2" value="{{url2}}">
+    <input type="text" id="url3" value="{{url3}}">
+    <input type="text" id="userId" value="{{userId}}">
+    <form id="chapter1quiz" action="/users/pretests?_method=PUT" method="post">
+      <input type="text" id="questionsLength" value="{{pretestQuestions.length}}">
+      {{#each pretestQuestions}}
+      <div class="card mx-auto p-3 mb-3" style="width: 50rem;">
+        <p class="">{{this.title}}: {{this.question}} | Answer: {{this.answer}}</p>
+        <div class="row row-cols-2">
+          {{#each this.choices}}
+          <div class="col">
+            <input type="radio" id={{this.order}} name={{this.title}} value={{this.value}}>
+            <label for={{this.order}}>{{this.value}}</label>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      {{/each}}
+      <div class="d-grid col-8 mx-auto">
+        <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+  <!-- {{#if chapter.isTaken}}
+    <p>Score: {{chapter.score}}</p>
+  {{else}}
+    <div class="">
+      <input type="text" id="chapterId" value={{chapter._id}}>
+      <input type="text" id="quizUrl" value="http://localhost:2000/api/chapters/{{chapter._id}}/quiz">
+      <input type="text" id="userId" value="{{userId}}">
+      <form id="chapter1quiz" method="post">
+        {{#each chapter.quiz}}
+        <div class="card mx-auto p-3 mb-3" style="width: 50rem;">
+          <p class="">{{this.title}}: {{this.question}} | Answer: {{this.answer}}</p>
+          <div class="row row-cols-2">
+            {{#each this.choices}}
+            <div class="col">
+              <input type="radio" id={{this.order}} name={{this.title}} value={{this.value}}>
+              <label for={{this.order}}>{{this.value}}</label>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        {{/each}}
+        <div class="d-grid col-8 mx-auto">
+          <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  {{/if}} -->
+</div>

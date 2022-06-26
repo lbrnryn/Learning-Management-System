@@ -1,8 +1,7 @@
 const express = require('express');
 const { create } = require('express-handlebars');
 require('dotenv').config();
-const { mongoosedb } = require('./db');
-mongoosedb();
+require('./db');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -21,6 +20,7 @@ app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 app.set('views', './views');
 app.set('json spaces', 2);
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: 'secret',
@@ -42,13 +42,17 @@ app.use(methodOverride('_method'));
 app.use('/', (require('./routes/index')));
 app.use('/users', require('./routes/users'));
 app.use('/subjects', require('./routes/subjects'));
-app.use('/classes', require('./routes/classes'));
 app.use('/chapters', require('./routes/chapters'));
+app.use('/classes', require('./routes/classes'));
+// app.use('/quizQuestions', require('./routes/quizQuestions'));
+app.use('/questions', require('./routes/questions'));
 
 // API
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/classes', require('./routes/api/classes'));
 app.use('/api/chapters', require('./routes/api/chapters'));
+// app.use('/api/quizQuestions', require('./routes/api/quizQuestions'));
+app.use('/api/questions', require('./routes/api/questions'));
 
 // Error handling
 // Working when going to route/s does not exist
