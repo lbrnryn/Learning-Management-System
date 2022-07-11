@@ -23,14 +23,9 @@ const storage = new GridFsStorage({
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
+        if (err) { return reject(err) }
         const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
+        const fileInfo = { filename: filename, bucketName: 'uploads' };
         resolve(fileInfo);
       });
     });
@@ -38,16 +33,12 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-// POST - /users/avatar
+// Upload profile picture - POST - /users/avatar
 router.post('/avatar', upload.single('avatar'), async (req, res, next) => {
   try {
-    // console.log(req.file)
-    // console.log(req.user)
-    const user = await User.findByIdAndUpdate({ _id: req.user._id }, {
-      avatarUrl: req.file.filename
-    });
+    const user = await User.findByIdAndUpdate({ _id: req.user._id }, { avatarUrl: req.file.filename });
     req.flash('success', 'Update successfully!');
-    res.status(200).redirect('/users/profile')
+    res.status(200).redirect('/users/profile');
   } catch (err) { next(err) }
 })
 
@@ -55,37 +46,29 @@ router.post('/avatar', upload.single('avatar'), async (req, res, next) => {
 router.get('/avatar/:filename', (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: 'No file exists'
-      });
+      return res.status(404).json({ err: 'No file exists' });
     }
 
     if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
       const readstream = gridfsBucket.openDownloadStream(file._id);
       readstream.pipe(res);
     } else {
-      res.status(404).json({
-        err: 'Not an image'
-      });
+      res.status(404).json({ err: 'Not an image' });
     }
   });
 });
 
 // GET - /users/profile
 router.get('/profile', async (req, res) => {
-  // console.log(req.user)
   const user = await User.findById({ _id: req.user._id });
   res.render('admin/profile', { user });
 });
 
 // POST - /users/profile
 router.post('/profile', async (req, res, next) => {
-  // console.log(req.body)
   const { email, username } = req.body;
   try {
-    const user = await User.findByIdAndUpdate({ _id: req.user._id }, {
-      email, username
-    });
+    const user = await User.findByIdAndUpdate({ _id: req.user._id }, { email, username });
     req.flash('success', 'Update successfully!');
     res.status(200).redirect('/users/profile');
   } catch (err) { next(err) }
@@ -94,7 +77,6 @@ router.post('/profile', async (req, res, next) => {
 // Adds quiz score record - PUT /users/quizzes
 router.put('/quizzes', async (req, res, next) => {
   try {
-    // console.log(req.body);
     const { questionsLength, chapterId, score } = req.body;
     const user = await User.findByIdAndUpdate({ _id: req.user._id },
     { $push: { quizzes: {
@@ -103,16 +85,12 @@ router.put('/quizzes', async (req, res, next) => {
       score: score,
       isQuizAnswered: true
     } } });
-    // console.log(user);
-    // res.redirect('/quizQuestions/chapter/627a98d485f8789f333d4b2f');
-    // res.redirect('/chapters/subject/6262850bb43ab8e995f56daf');
-  } catch (err) { console.log(err.message) }
+  } catch (err) { next(err) }
 });
 
 // Adds pretest score record - PUT /users/pretests
 router.put('/pretests', async (req, res, next) => {
   try {
-    // console.log(req.body);
     const { questionsLength, chapterId, score } = req.body;
     const user = await User.findByIdAndUpdate({ _id: req.user._id },
     { $push: { pretests: {
@@ -121,16 +99,12 @@ router.put('/pretests', async (req, res, next) => {
       score: score,
       isPretestAnswered: true
     } } });
-    // console.log(user);
-    // res.redirect('/quizQuestions/chapter/627a98d485f8789f333d4b2f');
-    // res.redirect('/chapters/subject/6262850bb43ab8e995f56daf');
-  } catch (err) { console.log(err.message) }
+  } catch (err) { next(err) }
 });
 
 // Adds posttest score record - PUT /users/posttests
 router.put('/posttests', async (req, res, next) => {
   try {
-    // console.log(req.body);
     const { questionsLength, chapterId, score } = req.body;
     const user = await User.findByIdAndUpdate({ _id: req.user._id },
     { $push: { posttests: {
@@ -139,10 +113,7 @@ router.put('/posttests', async (req, res, next) => {
       score: score,
       isPosttestAnswered: true
     } } });
-    // console.log(user);
-    // res.redirect('/quizQuestions/chapter/627a98d485f8789f333d4b2f');
-    // res.redirect('/chapters/subject/6262850bb43ab8e995f56daf');
-  } catch (err) { console.log(err.message) }
+  } catch (err) { next(err) }
 });
 
 // Updates single user - PUT /users/:id

@@ -67,6 +67,6 @@ app.use((err, req, res, next) => {
   next();
 })
 
-const PORT = process.env.PORT || 2000;
+// const PORT = process.env.PORT;
 
-app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+app.listen(process.env.PORT, () => console.log(`Listening on port: ${process.env.PORT}`));

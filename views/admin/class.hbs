@@ -14,14 +14,14 @@
                 <div class="row">
                   <div class="col input-group mb-3">
                     <span class="input-group-text">Section</span>
-                    <input type="text" class="form-control" name="section">
+                    <input type="text" class="form-control" name="section" required>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col input-group mb-3">
                     <label class="input-group-text" for="subject">Subject</label>
-                    <select class="form-select" name="subject">
-                      <option selected>Choose a Subject...</option>
+                    <select class="form-select" name="subject" required>
+                      <option value="">Choose a Subject...</option>
                       {{#each subjects}}
                         <option value={{this._id}}>{{this.title}}({{this.code}})</option>
                       {{/each}}
@@ -31,8 +31,8 @@
                 <div class="row">
                   <div class="col input-group mb-3">
                     <label class="input-group-text" for="teacher">Teacher</label>
-                    <select class="form-select" name="teacher">
-                      <option selected>Choose a Teacher...</option>
+                    <select class="form-select" name="teacher" required>
+                      <option value="">Choose a Teacher...</option>
                       {{#each teachers}}
                         <option value={{this._id}}>{{this.firstname}} {{this.lastname}}</option>
                       {{/each}}
@@ -42,18 +42,18 @@
                 <div class="row mb-3">
                   <div class="col input-group">
                     <span class="input-group-text">Time Start</span>
-                    <input type="text" class="form-control" name="timeStart">
+                    <input type="text" class="form-control" name="timeStart" required>
                   </div>
                   <div class="col input-group">
                     <span class="input-group-text">Time End</span>
-                    <input type="text" class="form-control" name="timeEnd">
+                    <input type="text" class="form-control" name="timeEnd" required>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <div class="col input-group">
                     <label class="input-group-text" for="day">Day</label>
-                    <select class="form-select" name="day">
-                      <option selected>Choose a Day...</option>
+                    <select class="form-select" name="day" required>
+                      <option value="">Choose a Day...</option>
                       <option value="Monday">Monday</option>
                       <option value="Tuesday">Tuesday</option>
                       <option value="Wednesday">Wednesday</option>
@@ -65,7 +65,7 @@
                   </div>
                   <div class="col input-group">
                     <span class="input-group-text">Room</span>
-                    <input type="text" class="form-control" name="room">
+                    <input type="text" class="form-control" name="room" required>
                   </div>
                 </div>
               </div>
@@ -107,10 +107,15 @@
               <td class="text-nowrap">{{this.timeStart}} - {{this.timeEnd}} | {{this.day}}</td>
               <td class="text-nowrap">{{this.room}}</td>
               <td>{{this.student.length}}</td>
-              <td class="d-flex">
+              <td class="d-flex justify-content-center align-items-center">
                 <button type="button" class="badge rounded-pill bg-primary border-0">Edit</button>
-                <button type="button" class="badge rounded-pill bg-danger border-0">Delete</button>
-                <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl={{this.classesfetchurl}} {{#if this.studentfetchurl}}data-studentfetchurl={{this.studentfetchurl}}{{/if}} data-studentsfetchurl={{this.studentsfetchurl}}>Add Student</button>
+                <form class="delClassForm" action="/classes/{{this._id}}?_method=DELETE" method="post">
+                  <!-- <input type="hidden" name="classId" value="{{this._id}}"> -->
+                  <button type="submit" class="badge rounded-pill bg-danger border-0">Delete</button>
+                </form>
+                <!-- <button type="button" class="badge rounded-pill bg-danger border-0">Delete</button> -->
+                <!-- <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl={{this.classesfetchurl}} data-studentsfetchurl={{this.studentsfetchurl}}>Add Student</button> -->
+                <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl="{{this.classesfetchurl}}/api/classes/{{this._id}}" data-studentsfetchurl="{{this.studentsfetchurl}}/api/users/students">Add Student</button>
               </td>
             </tr>
             {{/each}}

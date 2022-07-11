@@ -3,11 +3,11 @@ const router = express.Router();
 const Chapter = require('../../models/Chapter');
 
 // /api/chapters/:id/quiz
-router.get('/:id/quiz', async (req, res) => {
+router.get('/:id/quiz', async (req, res, next) => {
   try {
     const chapter = await Chapter.findById({ _id: req.params.id }) ;
     res.json(chapter.quiz)
-  } catch (err) { console.log(err.message) }
+  } catch (err) { next(err) }
 });
 
 // Get all chapters with subject id /api/chapters/:id

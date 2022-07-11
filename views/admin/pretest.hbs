@@ -1,6 +1,6 @@
 {{> dashboardnavbar}}
 
-<div class="container mt-5 d-flex justify-content-around">
+<div class="container mt-5 d-md-flex justify-content-around">
   <!-- <form action="/subjects/{{subject._id}}/quizzes?_method=PUT" class="" method="POST"> -->
   <form action="/questions/pretest/chapter/{{chapter._id}}" method="POST">
     <div class="d-flex gap-3">
@@ -33,7 +33,7 @@
 
     <p class="mt-2 mb-0">Choices</p>
 
-    <div class="d-flex gap-3 mb-3">
+    <div class="d-flex justify-content-between mb-3">
       <div class="">
         <input type="hidden" class="form-control form-control-sm p-0" name="order" value="c1" readonly>
         <input type="text" class="form-control form-control-sm" id="value" name="value" required>
@@ -43,7 +43,7 @@
         <input type="text" class="form-control form-control-sm" id="value" name="value" required>
       </div>
     </div>
-    <div class="d-flex gap-3 mb-3">
+    <div class="d-flex justify-content-between mb-3">
       <div class="">
         <input type="hidden" class="form-control form-control-sm p-0" name="order" value="c3" readonly>
         <input type="text" class="form-control form-control-sm" id="value" name="value" required>

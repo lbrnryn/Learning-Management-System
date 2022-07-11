@@ -10,34 +10,28 @@ router.get('/', async (req, res, next) => {
 
     // If logger is admin
     if (req.user.isAdmin) {
-      const classesArr = await Class.find({}).populate('subject').populate('teacher').populate('student').lean();
+      const classes = await Class.find({}).populate('subject').populate('teacher').populate('student').lean();
 
-      const sections = classesArr.map((singleclass) => {
+      const sections = classes.map((singleclass) => {
         return singleclass.section
       });
 
-      const classes = classesArr.map((singleclass) => {
-        const { _id, section, subject, teacher, student, day, timeStart, timeEnd, room } = singleclass;
-        const classesfetchurl = process.env.NODE_ENV == 'development' ? `http://localhost:2000/api/classes/${_id}` : `https://lmslbrn.herokuapp.com/api/classes/${_id}`;
-        const studentsfetchurl = process.env.NODE_ENV == 'development' ? `http://localhost:2000/api/users/students` : `https://lmslbrn.herokuapp.com/api/users/students`;
-        return { _id, section, subject, teacher, student, day, timeStart, timeEnd, room, classesfetchurl, studentsfetchurl }
-      })
+      classes.forEach((singleclass) => {
+        singleclass.classesfetchurl = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}` : `https://lmslbrn.herokuapp.com`;
+        singleclass.studentsfetchurl = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}` : `https://lmslbrn.herokuapp.com`;
+      });
 
       const subjects = await Subject.find({}).lean();
       const users = await User.find({}).lean();
       const teachers = users.filter(user => user.isTeacher);
       const students = users.filter(user => user.isStudent);
-      // console.log(classesArr)
-      // console.log(sections)
 
       const user = await User.findById({ _id: req.user._id });
-      res.render('admin/class', { title: 'Class - Admin', sections, classes, subjects, teachers, students, admin: true, user })
+      res.render('admin/class', { title: 'Class - Admin', sections, classes, subjects, teachers, students, admin: true, user });
     }
 
     // If logger is student
     if (req.user.isStudent) {
-      // const classesArr = await Class.find({ student: { _id: req.user._id } }).populate('subject').populate('student').lean();
-      // const classes = classesArr.map(singleclass => singleclass);
       const classes = await Class.find({ student: { _id: req.user._id } }).populate('subject').populate('student');
       const user = await User.findById({ _id: req.user._id });
       res.render('student/class', { title: 'Class - Student', classes, user })
@@ -65,6 +59,15 @@ router.put('/addstudents/:id', async (req, res, next) => {
     });
     req.flash('success', 'Student is now enrolled in this class')
     res.redirect('/classes');
+  } catch (err) { next(err) }
+});
+
+// Class Page - Delete a class - DELETE /classes/:id
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Class.findByIdAndDelete({ _id: req.params.id });
+    req.flash('success', 'Class has been deleted!');
+    res.status(200).redirect('/classes');
   } catch (err) { next(err) }
 });
 

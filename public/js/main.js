@@ -21,14 +21,11 @@ const editCancelBtn = document.querySelector('.editCancelBtn');
 // Edit button
 editBtns.forEach((editBtn) => {
   editBtn.addEventListener('click', (e) => {
-    // console.log(e.target.parentElement.classList.contains('editBtn'));
     if (e.target.parentElement.classList.contains('editBtn')) {
-      // console.log(editBtn.dataset.id)
       const fetchUrl = editBtn.dataset.url;
       fetch(fetchUrl)
         .then(res => res.json())
         .then(data => {
-          // console.log(data)
 
           userForm.action = `/users/${data._id}?_method=PUT`; // Set form action
           email.disabled = false;
@@ -49,9 +46,8 @@ editBtns.forEach((editBtn) => {
 
           // Loop through roles from data to find roles equivalent to true and returns basic/student/teacher/admin
           dataRoles.forEach((dataRole, i) => {
-            if (dataRole.basic === true || dataRole.student === true || dataRole.teacher === true || dataRole.admin === true) {
-              // console.log(dataRole)
-              // console.log(Object.keys(dataRole)[0])
+            // if (dataRole.basic === true || dataRole.student === true || dataRole.teacher === true || dataRole.admin === true) {
+            if (dataRole.basic || dataRole.student || dataRole.teacher || dataRole.admin) {
 
               // Loop through radio buttons for roles to find radio button that has id string of basic/student/teacher/admin equivalent to the return value from roles looping
               radioBtns.forEach((radioBtn) => {
@@ -298,9 +294,7 @@ if (chapter1quiz) {
       fetch(url1.value)
         .then(res => res.json())
         .then(data => {
-          console.log(data);
           const answers = data.map((data) => data.answer);
-          console.log(answers)
           if (inputRadioBtns) {
             inputRadioBtns.forEach((inputRadioBtn) => {
               // if (inputRadioBtn.checked && answers.indexOf(inputRadioBtn.value) !== -1) {
@@ -338,4 +332,22 @@ delChapterForms.forEach((delChapterForm) => {
       e.preventDefault();
     }
   })
+});
+
+const delClassForms = document.querySelectorAll(".delClassForm");
+delClassForms.forEach((delClassForm) => {
+  delClassForm.addEventListener('submit', (e) => {
+    if (!confirm("Are you sure you want to delete this class?")) {
+      e.preventDefault();
+    }
+  });
+});
+
+const delSubjectForms = document.querySelectorAll(".delSubjectForm");
+delSubjectForms.forEach((delSubjectForm) => {
+  delSubjectForm.addEventListener('submit', (e) => {
+    if (!confirm("Are you sure you want to delete this subject?")) {
+      e.preventDefault();
+    }
+  });
 });

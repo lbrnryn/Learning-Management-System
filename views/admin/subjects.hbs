@@ -14,8 +14,8 @@
                 <div class="row">
                   <div class="col input-group mb-3">
                     <label class="input-group-text" for="year">Year</label>
-                    <select class="form-select" name="year">
-                      <option selected>Choose Year...</option>
+                    <select class="form-select" name="year" required>
+                      <option value="">Choose Year...</option>
                       <option value="1st Year">1st Year</option>
                       <option value="2nd Year">2nd Year</option>
                       <option value="3rd Year">3rd Year</option>
@@ -24,8 +24,8 @@
                   </div>
                   <div class="col input-group mb-3">
                     <label class="input-group-text" for="semester">Trimester</label>
-                    <select class="form-select" name="semester">
-                      <option selected>Choose Trimester...</option>
+                    <select class="form-select" name="semester" required>
+                      <option value="">Choose Trimester...</option>
                       <option value="1st Trimester">1st Trimester</option>
                       <option value="2nd Trimester">2nd Trimester</option>
                       <option value="3rd Trimester">3rd Trimester</option>
@@ -35,21 +35,21 @@
                 <div class="row">
                   <div class="col input-group mb-3">
                     <span class="input-group-text">Code</span>
-                    <input type="text" class="form-control" name="code" placeholder="Code">
+                    <input type="text" class="form-control" name="code" placeholder="Code" required>
                   </div>
                 </div>
                 <div class="input-group mb-3">
                   <span class="input-group-text">Title</span>
-                  <input type="text" class="form-control" name="title" placeholder="Title">
+                  <input type="text" class="form-control" name="title" placeholder="Title" required>
                 </div>
                 <div class="row">
                   <div class="col input-group mb-3">
                     <span class="input-group-text">Pre-requisite</span>
-                    <input type="text" class="form-control" name="prerequisite" placeholder="Pre-requisite">
+                    <input type="text" class="form-control" name="prerequisite" placeholder="Pre-requisite" required>
                   </div>
                   <div class="col input-group mb-3">
                     <span class="input-group-text">Units</span>
-                    <input type="text" class="form-control" name="units" placeholder="Units">
+                    <input type="text" class="form-control" name="units" placeholder="Units" required>
                   </div>
                 </div>
               </div>
@@ -62,8 +62,6 @@
           </div>
         </div>
       </div>
-      <!-- <a href="/chapters" class="btn btn-primary btn-sm">Add Chapters</a> -->
-      <!-- <a href="/quizzes" class="btn btn-warning btn-sm">Add Quizzes</a> -->
 
       <div class="table-responsive">
         <table class="table table-sm caption-top mb-5">
@@ -86,10 +84,12 @@
               <td>{{this.units}}</td>
               <td>{{this.prerequisite}}</td>
               <td>
-                <div class="d-flex justify-content-center">
-                  <!-- <a class="badge rounded-pill btn-primary text-decoration-none" href="/subjects/{{this._id}}/chapters">Add Chapter</a> -->
+                <div class="d-flex justify-content-center align-items-center">
                   <a class="badge rounded-pill btn-primary text-decoration-none" href="/chapters/subject/{{this._id}}">Add Chapter</a>
-                  <!-- <a class="badge rounded-pill btn-warning text-decoration-none" href="/subjects/{{this._id}}/quizzes">Add Quizzes</a> -->
+                  <form class="delSubjectForm" action="/subjects?_method=DELETE" method="post">
+                    <input type="hidden" name="subjectId" value="{{this._id}}">
+                    <button type="submit" class="badge rounded-pill bg-danger border-0">Delete</button>
+                  </form>
                 </div>
               </td>
             </tr>
@@ -120,9 +120,12 @@
               <td>{{this.units}}</td>
               <td>{{this.prerequisite}}</td>
               <td>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center align-items-center">
                   <a class="badge rounded-pill btn-primary text-decoration-none" href="/chapters/subject/{{this._id}}">Add Chapter</a>
-                  <!-- <a class="badge rounded-pill btn-warning text-decoration-none" href="/subjects/{{this._id}}/quizzes">Add Quizzes</a> -->
+                  <form class="delSubjectForm" action="/subjects?_method=DELETE" method="post">
+                    <input type="hidden" name="subjectId" value="{{this._id}}">
+                    <button type="submit" class="badge rounded-pill bg-danger border-0">Delete</button>
+                  </form>
                 </div>
               </td>
             </tr>
@@ -153,9 +156,12 @@
               <td>{{this.units}}</td>
               <td>{{this.prerequisite}}</td>
               <td>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center align-items-center">
                   <a class="badge rounded-pill btn-primary text-decoration-none" href="/chapters/subject/{{this._id}}">Add Chapter</a>
-                  <!-- <a class="badge rounded-pill btn-warning text-decoration-none" href="/subjects/{{this._id}}/quizzes">Add Quizzes</a> -->
+                  <form class="delSubjectForm" action="/subjects?_method=DELETE" method="post">
+                    <input type="hidden" name="subjectId" value="{{this._id}}">
+                    <button type="submit" class="badge rounded-pill bg-danger border-0">Delete</button>
+                  </form>
                 </div>
               </td>
             </tr>
@@ -186,9 +192,12 @@
               <td>{{this.units}}</td>
               <td>{{this.prerequisite}}</td>
               <td>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center align-items-center">
                   <a class="badge rounded-pill btn-primary text-decoration-none" href="/chapters/subject/{{this._id}}">Add Chapter</a>
-                  <!-- <a class="badge rounded-pill btn-warning text-decoration-none" href="/subjects/{{this._id}}/quizzes">Add Quizzes</a> -->
+                  <form class="delSubjectForm" action="/subjects?_method=DELETE" method="post">
+                    <input type="hidden" name="subjectId" value="{{this._id}}">
+                    <button type="submit" class="badge rounded-pill bg-danger border-0">Delete</button>
+                  </form>
                 </div>
               </td>
             </tr>

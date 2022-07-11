@@ -4,30 +4,30 @@ const router = express.Router();
 const Questions = require('../../models/Question');
 
 // /api/questions/quiz/chapter/:id
-router.get('/quiz/chapter/:id', async (req, res) => {
+router.get('/quiz/chapter/:id', async (req, res, next) => {
   try {
     // console.log(req.params.id)
     const quizQuestions = await Questions.find({ chapter: req.params.id, type: "quiz" });
     res.json(quizQuestions);
-  } catch (err) { console.log(err.message) }
+  } catch (err) { next(err) }
 });
 
 // /api/questions/pretest/chapter/:id
-router.get('/pretest/chapter/:id', async (req, res) => {
+router.get('/pretest/chapter/:id', async (req, res, next) => {
   try {
     // console.log(req.params.id)
     const pretestQuestions = await Questions.find({ chapter: req.params.id, type: "pretest" });
     res.json(pretestQuestions);
-  } catch (err) { console.log(err.message) }
+  } catch (err) { next(err) }
 });
 
 // /api/questions/pretest/chapter/:id
-router.get('/posttest/chapter/:id', async (req, res) => {
+router.get('/posttest/chapter/:id', async (req, res, next) => {
   try {
     // console.log(req.params.id)
     const posttestQuestions = await Questions.find({ chapter: req.params.id, type: "posttest" });
     res.json(posttestQuestions);
-  } catch (err) { console.log(err.message) }
+  } catch (err) { next(err) }
 });
 
 // // /api/quizQuestions/chapter/:id

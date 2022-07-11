@@ -4,13 +4,10 @@
   <h1 class="mb-4">{{chapter.title}} Quiz</h1>
   <div class="">
     <input type="hidden" id="chapterId" value={{chapter._id}}>
-    <!-- <input type="text" id="quizUrl" value="http://localhost:2000/api/chapters/{{chapter._id}}/quiz"> -->
-    <!-- <input type="text" id="quizUrl" value="http://localhost:2000/api/quizQuestions/chapter/{{chapter._id}}"> -->
-    <!-- <input type="text" id="url1" value="http://localhost:2000/api/questions/quiz/chapter/{{chapter._id}}"> -->
-    <input type="hidden" id="url1" value="{{url1}}">
-    <!-- <input type="text" id="url2" value="http://localhost:2000/users/quizzes"> -->
-    <input type="hidden" id="url2" value="{{url2}}">
-    <input type="hidden" id="url3" value="{{url3}}">
+    <!-- <input type="hidden" id="url1" value="{{url1}}"> -->
+    <input type="hidden" id="url1" value="{{url}}/api/questions/quiz/chapter/{{chapter._id}}">
+    <input type="hidden" id="url2" value="{{url}}/users/quizzes">
+    <input type="hidden" id="url3" value="{{url}}/classes">
     <input type="hidden" id="userId" value="{{userId}}">
     <form id="chapter1quiz" action="/users/quizzes?_method=PUT" method="post">
       <input type="hidden" id="questionsLength" value="{{quizQuestions.length}}">
