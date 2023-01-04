@@ -7,7 +7,7 @@ const Question = require('../models/Question');
 // Get quiz questions of single chapter - GET /questions/quiz/chapter/:id
 router.get('/quiz/chapter/:id', async (req, res, next) => {
   try {
-    if (req.user.isAdmin) {
+    if (req.user.isAdmin || req.user.isTeacher) {
       const chapter = await Chapter.findById({ _id: req.params.id });
       const quizQuestions = await Question.find({ chapter: req.params.id, type: "quiz" });
       const user = await User.findById({ _id: req.user._id });
@@ -48,7 +48,7 @@ router.post('/quiz/chapter/:id', async (req, res, next) => {
 // Get pre test questions of single chapter - GET /questions/pretest/chapter/:id
 router.get('/pretest/chapter/:id', async (req, res, next) => {
   try {
-    if (req.user.isAdmin) {
+    if (req.user.isAdmin || req.user.isTeacher) {
       const chapter = await Chapter.findById({ _id: req.params.id });
       const pretestQuestions = await Question.find({ chapter: req.params.id, type: "pretest" });
       const user = await User.findById({ _id: req.user._id });
@@ -89,7 +89,7 @@ router.post('/pretest/chapter/:id', async (req, res, next) => {
 // Get post test questions of single chapter - GET /questions/posttest/chapter/:id
 router.get('/posttest/chapter/:id', async (req, res, next) => {
   try {
-    if (req.user.isAdmin) {
+    if (req.user.isAdmin || req.user.isTeacher) {
       const chapter = await Chapter.findById({ _id: req.params.id });
       const posttestQuestions = await Question.find({ chapter: req.params.id, type: "posttest" });
       const user = await User.findById({ _id: req.user._id });

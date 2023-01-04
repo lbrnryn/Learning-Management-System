@@ -27,7 +27,7 @@ router.delete('/:id', async (req, res, next) => {
 // Get all chapters of subject - GET /chapters/subject/:id
 router.get('/subject/:id', async (req, res, next) => {
   try {
-    if (req.user.isAdmin) {
+    if (req.user.isAdmin || req.user.isTeacher) {
       const chapters = await Chapter.find({ subject: req.params.id });
       const subject = await Subject.findById({ _id: req.params.id });
       const user = await User.findById({ _id: req.user._id });

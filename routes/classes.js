@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
   try {
 
     // If logger is admin
-    if (req.user.isAdmin) {
+    if (req.user.isAdmin || req.user.isTeacher) {
       const classes = await Class.find({}).populate('subject').populate('teacher').populate('student').lean();
 
       const sections = classes.map((singleclass) => {
@@ -17,8 +17,8 @@ router.get('/', async (req, res, next) => {
       });
 
       classes.forEach((singleclass) => {
-        singleclass.classesfetchurl = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}` : `https://lmslbrn.herokuapp.com`;
-        singleclass.studentsfetchurl = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}` : `https://lmslbrn.herokuapp.com`;
+        singleclass.classesUrl = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}/api/classes/${singleclass._id}` : `https://lmslbrn.herokuapp.com/api/classes/${singleclass._id}`;
+        singleclass.studentsUrl = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}/api/users/students` : `https://lmslbrn.herokuapp.com/api/users/students`;
       });
 
       const subjects = await Subject.find({}).lean();

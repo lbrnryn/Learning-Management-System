@@ -64,11 +64,11 @@ router.get('/profile', async (req, res) => {
   res.render('admin/profile', { user });
 });
 
-// POST - /users/profile
-router.post('/profile', async (req, res, next) => {
-  const { email, username } = req.body;
+// Update profile - PUT /users/profile
+router.put('/profile', async (req, res, next) => {
+  const { email, username, firstname, lastname } = req.body;
   try {
-    const user = await User.findByIdAndUpdate({ _id: req.user._id }, { email, username });
+    const user = await User.findByIdAndUpdate({ _id: req.user._id }, { email, username, firstname, lastname });
     req.flash('success', 'Update successfully!');
     res.status(200).redirect('/users/profile');
   } catch (err) { next(err) }

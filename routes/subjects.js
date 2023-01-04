@@ -6,7 +6,8 @@ const Chapter = require('../models/Chapter');
 const { checkAuthenticated } = require('../middleware.js');
 
 // Subjects Page - GET /subjects
-router.get('/', checkAuthenticated, async (req, res, next) => {
+// router.get('/', checkAuthenticated, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const subjects = await Subject.find({}).lean();
 
@@ -38,11 +39,10 @@ router.post('/', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
-// Delete a subject - DELETE /subjects
-router.delete('/', async (req, res, next) => {
+// Delete a subject - DELETE /subjects/:id
+router.delete('/:id', async (req, res, next) => {
   try {
-    const { subjectId } = req.body;
-    await Subject.findByIdAndDelete({ _id: subjectId });
+    await Subject.findByIdAndDelete({ _id: req.params.id });
     req.flash('success', 'Successfully deleted a subject');
     res.redirect('/subjects');
   } catch (err) { next(err) }

@@ -110,12 +110,11 @@
               <td class="d-flex justify-content-center align-items-center">
                 <button type="button" class="badge rounded-pill bg-primary border-0">Edit</button>
                 <form class="delClassForm" action="/classes/{{this._id}}?_method=DELETE" method="post">
-                  <!-- <input type="hidden" name="classId" value="{{this._id}}"> -->
                   <button type="submit" class="badge rounded-pill bg-danger border-0">Delete</button>
                 </form>
                 <!-- <button type="button" class="badge rounded-pill bg-danger border-0">Delete</button> -->
                 <!-- <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl={{this.classesfetchurl}} data-studentsfetchurl={{this.studentsfetchurl}}>Add Student</button> -->
-                <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl="{{this.classesfetchurl}}/api/classes/{{this._id}}" data-studentsfetchurl="{{this.studentsfetchurl}}/api/users/students">Add Student</button>
+                <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl="{{this.classesUrl}}" data-studentsfetchurl="{{this.studentsUrl}}">Add Student</button>
               </td>
             </tr>
             {{/each}}

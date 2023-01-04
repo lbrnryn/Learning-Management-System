@@ -51,26 +51,40 @@ router.post('/register', async (req, res, next) => {
 });
 
 // Dashboard Page - GET /dashboard
-router.get('/dashboard', checkAuthenticated, async (req, res, next) => {
+// router.get('/dashboard', checkAuthenticated, async (req, res, next) => {
+router.get('/dashboard', async (req, res, next) => {
   try {
-    if (req.user.isBasic) {
-      const user = await User.findById({ _id: req.user._id });
-      res.render('notverified', { user });
-    }
-    if (req.user.isAdmin) {
-      const users = await User.find({}).lean();
+
+      const usersArr = await User.find({}).lean();
+      const users = usersArr.filter(user => !user.isAdmin && user.username !== "admin");
       users.forEach((user) => {
-        user.fetchUrl = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}` : `https://lmslbrn.herokuapp.com`;
+        user.url = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}/api/users/${user._id}` : `https://lmslbrn.herokuapp.com/api/users/${user._id}`;
       });
+      // const user = await User.findById({ _id: req.user._id });
+      // res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true, user });   
+      res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true });   
+    
 
-      const user = await User.findById({ _id: req.user._id });
-      res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true, user });
-    }
+    // if (req.user.isBasic) {
+    //   const user = await User.findById({ _id: req.user._id });
+    //   res.render('notverified', { user });
+    // }
 
-    if (req.user.isStudent) {
-      const user = await User.findById({ _id: req.user._id });
-      res.render('student/dashboard', { title: 'Dashboard - Student', user });
-    }
+    // if (req.user.isAdmin || req.user.isTeacher) {
+    //   const usersArr = await User.find({}).lean();
+    //   const users = usersArr.filter(user => !user.isAdmin && user.username !== "admin");
+    //   users.forEach((user) => {
+    //     user.url = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}/api/users/${user._id}` : `https://lmslbrn.herokuapp.com/api/users/${user._id}`;
+    //   });
+
+    //   const user = await User.findById({ _id: req.user._id });
+    //   res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true, user });
+    // }
+
+    // if (req.user.isStudent) {
+    //   const user = await User.findById({ _id: req.user._id });
+    //   res.render('student/dashboard', { title: 'Dashboard - Student', user });
+    // }
 
   } catch (err) { next(err) }
 })

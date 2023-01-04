@@ -8,22 +8,24 @@ if (removeToast) {
 }
 
 // Needs to clean the code
-// Home Page
-const editBtns = document.querySelectorAll('.editBtn');
+// /dashboard
+const getUserBtns = document.querySelectorAll('.getUserBtn');
 const userForm = document.querySelector('#userForm');
 const email = document.querySelector('#email');
 const username = document.querySelector('#username');
 const radioBtns = Array.from(document.querySelectorAll('.radioRoleBtn'));
-const editSubmitBtn = document.querySelector('.editSubmitBtn');
-const editCancelBtn = document.querySelector('.editCancelBtn');
+const editUserSubmitBtn = document.querySelector('.editUserSubmitBtn');
+const editUserCancelBtn = document.querySelector('.editUserCancelBtn');
+const deleteUserForms = document.querySelectorAll('.deleteUserForm');
 
 // Needs to clean the code
 // Edit button
-editBtns.forEach((editBtn) => {
-  editBtn.addEventListener('click', (e) => {
-    if (e.target.parentElement.classList.contains('editBtn')) {
-      const fetchUrl = editBtn.dataset.url;
-      fetch(fetchUrl)
+getUserBtns.forEach((getUserBtn) => {
+  getUserBtn.addEventListener('click', (e) => {
+    console.log(e.target)
+    if (e.target.parentElement.classList.contains('getUserBtn')) {
+      const url = getUserBtn.dataset.url;
+      fetch(url)
         .then(res => res.json())
         .then(data => {
 
@@ -35,6 +37,7 @@ editBtns.forEach((editBtn) => {
           radioBtns.forEach((radioBtn) => {
             radioBtn.disabled = false;
           });
+
 
           // Create Roles Array
           const dataRoles = [
@@ -57,8 +60,8 @@ editBtns.forEach((editBtn) => {
               });
             }
           });
-          editSubmitBtn.disabled = false;
-          editCancelBtn.style.display = 'block';
+          editUserSubmitBtn.disabled = false;
+          editUserCancelBtn.style.display = 'block';
         });
       return;
     }
@@ -68,21 +71,21 @@ editBtns.forEach((editBtn) => {
 // Alert message before changing user role - Admin - /dashboard
 if (userForm) {
   userForm.addEventListener('submit', (e) => {
-    if (!confirm("Are you sure you want to change this user role?")) {
+    if (!confirm("Are you sure you want to update info of this user?")) {
       e.preventDefault();
     }
   })
 }
 
 // Cancel button to clear input fields - Admin - /dashboard
-if (editCancelBtn) {
-  editCancelBtn.addEventListener('click', () => {
+if (editUserCancelBtn) {
+  editUserCancelBtn.addEventListener('click', () => {
     email.value = "";
     email.disabled = true;
     username.value = "";
     username.disabled = true;
-    editSubmitBtn.disabled = true;
-    editCancelBtn.style.display = 'none';
+    editUserSubmitBtn.disabled = true;
+    editUserCancelBtn.style.display = 'none';
     radioBtns.forEach((radioBtn) => {
       radioBtn.checked = false;
       radioBtn.disabled = true;
@@ -91,7 +94,6 @@ if (editCancelBtn) {
 }
 
 // Delete button to remove user - Admin - /dashboard
-const deleteUserForms = document.querySelectorAll('.deleteUserForm');
 // console.log(deleteUserForm)
 if (deleteUserForms) {
   deleteUserForms.forEach((deleteUserForm) => {
