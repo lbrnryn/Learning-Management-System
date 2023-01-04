@@ -9,7 +9,7 @@ if (removeToast) {
 
 // Needs to clean the code
 // /dashboard
-const getUserBtns = document.querySelectorAll('.getUserBtn');
+const editUserBtns = document.querySelectorAll('#editUserBtn');
 const userForm = document.querySelector('#userForm');
 const email = document.querySelector('#email');
 const username = document.querySelector('#username');
@@ -20,51 +20,51 @@ const deleteUserForms = document.querySelectorAll('.deleteUserForm');
 
 // Needs to clean the code
 // Edit button
-getUserBtns.forEach((getUserBtn) => {
-  getUserBtn.addEventListener('click', (e) => {
-    console.log(e.target)
-    if (e.target.parentElement.classList.contains('getUserBtn')) {
-      const url = getUserBtn.dataset.url;
-      fetch(url)
-        .then(res => res.json())
-        .then(data => {
+editUserBtns.forEach((editUserBtn) => {
+  editUserBtn.addEventListener('click', (e) => {
+    const editBtn = e.target.tagName === "I" ? e.target.parentElement: e.target;
 
-          userForm.action = `/users/${data._id}?_method=PUT`; // Set form action
-          email.disabled = false;
-          email.value = data.email;
-          username.disabled = false;
-          username.value = data.username;
-          radioBtns.forEach((radioBtn) => {
-            radioBtn.disabled = false;
-          });
+    const url = editUserBtn.dataset.url;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        // console.log(data)
+        // Set form action
+        userForm.action = `/users/${data._id}?_method=PUT`; 
+        email.disabled = false;
+        username.disabled = false;
+        email.value = data.email;
+        username.value = data.username;
 
-
-          // Create Roles Array
-          const dataRoles = [
-            { basic: data.isBasic },
-            { student: data.isStudent},
-            { teacher: data.isTeacher},
-            { admin: data.isAdmin}
-          ];
-
-          // Loop through roles from data to find roles equivalent to true and returns basic/student/teacher/admin
-          dataRoles.forEach((dataRole, i) => {
-            // if (dataRole.basic === true || dataRole.student === true || dataRole.teacher === true || dataRole.admin === true) {
-            if (dataRole.basic || dataRole.student || dataRole.teacher || dataRole.admin) {
-
-              // Loop through radio buttons for roles to find radio button that has id string of basic/student/teacher/admin equivalent to the return value from roles looping
-              radioBtns.forEach((radioBtn) => {
-                if (radioBtn.id === Object.keys(dataRole)[0]) {
-                  radioBtn.checked = true;
-                }
-              });
-            }
-          });
-          editUserSubmitBtn.disabled = false;
-          editUserCancelBtn.style.display = 'block';
+        radioBtns.forEach((radioBtn) => {
+          radioBtn.disabled = false;
         });
-      return;
-    }
+
+
+        // Create Roles Array
+        const dataRoles = [
+          { basic: data.isBasic },
+          { student: data.isStudent},
+          { teacher: data.isTeacher},
+          { admin: data.isAdmin}
+        ];
+
+        // Loop through roles from data to find roles equivalent to true and returns basic/student/teacher/admin
+        dataRoles.forEach((dataRole, i) => {
+          if (dataRole.basic || dataRole.student || dataRole.teacher || dataRole.admin) {
+
+            // Loop through radio buttons for roles to find radio button that has id string of basic/student/teacher/admin equivalent to the return value from roles looping
+            radioBtns.forEach((radioBtn) => {
+              if (radioBtn.id === Object.keys(dataRole)[0]) {
+                radioBtn.checked = true;
+              }
+            });
+          }
+        });
+        editUserSubmitBtn.disabled = false;
+        editUserCancelBtn.style.display = 'block';
+      });
+
   });
 });
 
@@ -80,16 +80,17 @@ if (userForm) {
 // Cancel button to clear input fields - Admin - /dashboard
 if (editUserCancelBtn) {
   editUserCancelBtn.addEventListener('click', () => {
-    email.value = "";
     email.disabled = true;
-    username.value = "";
     username.disabled = true;
+    email.value = "";
+    username.value = "";
     editUserSubmitBtn.disabled = true;
     editUserCancelBtn.style.display = 'none';
     radioBtns.forEach((radioBtn) => {
       radioBtn.checked = false;
       radioBtn.disabled = true;
     });
+    userForm.action = "";
   })
 }
 

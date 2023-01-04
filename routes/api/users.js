@@ -46,11 +46,12 @@ router.put('/:id', async (req, res, next) => {
 });
 
 // // DELETE /api/users/:id
-// router.delete('/:id', async (req, res, next) => {
-//   try {
-//     await User.findByIdAndDelete({ _id: req.params.id });
-//     res.json({ msg: "User has been deleted" });
-//   } catch (err) { next(err) }
-// });
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await User.findByIdAndDelete({ _id: req.params.id });
+    // res.json({ msg: "User has been deleted" });
+    res.redirect("/dashboard");
+  } catch (err) { next(err) }
+});
 
 module.exports = router;
