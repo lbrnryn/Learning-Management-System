@@ -22,9 +22,11 @@ router.get('/', async (req, res, next) => {
       subject.secondTrimester = semester == "2nd Trimester" ? true: false;
       subject.thirdTrimester = semester == "3rd Trimester" ? true: false;
     });
+    // console.log(subjects)
 
-    const user = await User.findById({ _id: req.user._id });
-    res.render('admin/subjects', { title: 'Subjects - Admin', subjects, admin: true, user });
+    // const user = await User.findById({ _id: req.user._id });
+    // res.render('admin/subjects', { title: 'Subjects - Admin', subjects, admin: true, user });
+    res.render('admin/subjects', { title: 'Subjects - Admin', subjects, admin: true });
 
   } catch (err) { next(err) }
 });
