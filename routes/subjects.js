@@ -41,6 +41,12 @@ router.post('/', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
+router.put("/:id", async (req, res, next) => {
+  try {
+    console.log(req.params.id)
+  } catch (err) { next(err) }
+})
+
 // Delete a subject - DELETE /subjects/:id
 router.delete('/:id', async (req, res, next) => {
   try {
