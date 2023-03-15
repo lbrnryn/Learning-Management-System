@@ -4,29 +4,52 @@ const User = require('../models/User');
 const Subject = require('../models/Subject');
 const Chapter = require('../models/Chapter');
 const { checkAuthenticated } = require('../middleware.js');
+const formatSubjects = require("../helper");
 
-// Subjects Page - GET /subjects
+// GET /subjects
 // router.get('/', checkAuthenticated, async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
+    // console.log(formatSubjects)
     const subjects = await Subject.find({}).lean();
 
-    subjects.forEach((subject) => {
-      const { year, semester } = subject;
-      subject.firstYear = year == "1st Year" ? true: false;
-      subject.secondYear = year == "2nd Year" ? true: false;
-      subject.thirdYear = year == "3rd Year" ? true: false;
-      subject.fourthYear = year == "4th Year" ? true: false;
-
-      subject.firstTrimester = semester == "1st Trimester" ? true: false;
-      subject.secondTrimester = semester == "2nd Trimester" ? true: false;
-      subject.thirdTrimester = semester == "3rd Trimester" ? true: false;
+    res.render('admin/subjects', {
+      title: 'Subjects - Admin',
+      subjects,
+      admin: true,
+      helpers: {
+        firstYearFirstTrimester(subjects) {
+          return formatSubjects(subjects, "1st Year", "1st Trimester")
+        },
+        firstYearSecondTrimester(subjects) {
+          return formatSubjects(subjects, "1st Year", "2nd Trimester")
+        },
+        firstYearThirdTrimester(subjects) {
+          return formatSubjects(subjects, "1st Year", "3rd Trimester")
+        },
+        secondYearFirstTrimester(subjects) {
+          return formatSubjects(subjects, "2nd Year", "1st Trimester")
+        },
+        secondYearSecondTrimester(subjects) {
+          return formatSubjects(subjects, "2nd Year", "2nd Trimester")
+        },
+        secondYearThirdTrimester(subjects) {
+          return formatSubjects(subjects, "2nd Year", "3rd Trimester")
+        },
+        thirdYearFirstTrimester(subjects) {
+          return formatSubjects(subjects, "3rd Year", "1st Trimester")
+        },
+        thirdYearSecondTrimester(subjects) {
+          return formatSubjects(subjects, "3rd Year", "2nd Trimester")
+        },
+        thirdYearThirdTrimester(subjects) {
+          return formatSubjects(subjects, "3rd Year", "3rd Trimester")
+        },
+        fourthYearFirstTrimester(subjects) {
+          return formatSubjects(subjects, "4th Year", "1st Trimester")
+        }
+      }
     });
-    // console.log(subjects)
-
-    // const user = await User.findById({ _id: req.user._id });
-    // res.render('admin/subjects', { title: 'Subjects - Admin', subjects, admin: true, user });
-    res.render('admin/subjects', { title: 'Subjects - Admin', subjects, admin: true });
 
   } catch (err) { next(err) }
 });
@@ -41,9 +64,11 @@ router.post('/', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
+// Updates a subject - PUT /subjects/:id
 router.put("/:id", async (req, res, next) => {
   try {
-    console.log(req.params.id)
+    await Subject.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect("/subjects");
   } catch (err) { next(err) }
 })
 

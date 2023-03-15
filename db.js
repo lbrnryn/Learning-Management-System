@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-async function mongoosedb() {
+async function main() {
   try {
     await mongoose.connect(process.env.NODE_ENV == 'development' ? 'mongodb://127.0.0.1:27017/lms' : process.env.MONGO_URI);
     console.log('Database connected!');
@@ -8,4 +8,4 @@ async function mongoosedb() {
   // } catch (err) { next(err) }
 }
 
-mongoosedb()
+module.exports = main;

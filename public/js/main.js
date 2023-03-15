@@ -11,7 +11,7 @@ if (removeToast) {
 // /dashboard
 const editUserBtns = document.querySelectorAll('#editUserBtn');
 const userForm = document.querySelector('#userForm');
-const email = document.querySelector('#email');
+// const email = document.querySelector('#email');
 const username = document.querySelector('#username');
 const radioBtns = Array.from(document.querySelectorAll('.radioRoleBtn'));
 const editUserSubmitBtn = document.querySelector('.editUserSubmitBtn');
@@ -31,9 +31,9 @@ editUserBtns.forEach((editUserBtn) => {
         // console.log(data)
         // Set form action
         userForm.action = `/users/${data._id}?_method=PUT`; 
-        email.disabled = false;
+        // email.disabled = false;
         username.disabled = false;
-        email.value = data.email;
+        // email.value = data.email;
         username.value = data.username;
 
         radioBtns.forEach((radioBtn) => {
@@ -80,9 +80,9 @@ if (userForm) {
 // Cancel button to clear input fields - Admin - /dashboard
 if (editUserCancelBtn) {
   editUserCancelBtn.addEventListener('click', () => {
-    email.disabled = true;
+    // email.disabled = true;
     username.disabled = true;
-    email.value = "";
+    // email.value = "";
     username.value = "";
     editUserSubmitBtn.disabled = true;
     editUserCancelBtn.style.display = 'none';

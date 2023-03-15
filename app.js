@@ -1,22 +1,17 @@
 const express = require('express');
-const { create } = require('express-handlebars');
+const { engine } = require('express-handlebars');
 require('dotenv').config();
-require('./db');
+require('./db')();
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 require('./config/passport')(passport);
 const cors = require('cors');
 const methodOverride = require('method-override');
-const path = require('path');
 
 const app = express();
-const hbs = create({
-  extname: '.hbs',
-  runtimeOptions: { allowProtoPropertiesByDefault: true }
-})
 app.use(express.static('public'));
-app.engine('.hbs', hbs.engine);
+app.engine('.hbs', engine({ extname: ".hbs" }));
 app.set('view engine', '.hbs');
 app.set('views', './views');
 app.set('json spaces', 2);
@@ -31,7 +26,7 @@ app.use(flash());
 app.use((req, res, next)=> {
   res.locals.error  = req.flash('error');
   res.locals.success = req.flash('success');
-next();
+  next();
 })
 app.use(passport.initialize());
 app.use(passport.session());
@@ -66,7 +61,5 @@ app.use((err, req, res, next) => {
   res.redirect('/');
   next();
 })
-
-// const PORT = process.env.PORT;
 
 app.listen(process.env.PORT, () => console.log(`Listening on port: ${process.env.PORT}`));

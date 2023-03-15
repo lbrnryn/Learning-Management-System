@@ -1,0 +1,58 @@
+<button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addSubject">Add Subject</button>
+      
+<div id="addSubject" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        <form action="/subjects" method="post">
+            <div class="modal-body">
+            <div class="row">
+                <div class="col input-group mb-3">
+                <label class="input-group-text" for="year">Year</label>
+                <select class="form-select" name="year" required>
+                    <option value="">Choose Year...</option>
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                </select>
+                </div>
+                <div class="col input-group mb-3">
+                <label class="input-group-text" for="semester">Trimester</label>
+                <select class="form-select" name="semester" required>
+                    <option value="">Choose Trimester...</option>
+                    <option value="1st Trimester">1st Trimester</option>
+                    <option value="2nd Trimester">2nd Trimester</option>
+                    <option value="3rd Trimester">3rd Trimester</option>
+                </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col input-group mb-3">
+                <span class="input-group-text">Code</span>
+                <input type="text" class="form-control" name="code" placeholder="Code" required>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Title</span>
+                <input type="text" class="form-control" name="title" placeholder="Title" required>
+            </div>
+            <div class="row">
+                <div class="col input-group mb-3">
+                <span class="input-group-text">Units</span>
+                <input type="text" class="form-control" name="units" placeholder="Units" required>
+                </div>
+                <div class="col input-group mb-3">
+                <span class="input-group-text">Pre-requisite</span>
+                <input type="text" class="form-control" name="prerequisite" placeholder="Pre-requisite" required>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const Class= require('../models/Class');
+const Class = require('../models/Class');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const { checkAuthenticated } = require('../middleware.js');
@@ -13,26 +13,24 @@ router.get('/', (req, res) => {
 
 // Home Page - login - POST /
 router.post('/', (req, res, next) => {
-  passport.authenticate('local', { successRedirect: '/dashboard', failureRedirect: '/', failureFlash: true, successFlash: true })(req, res, next);
+  passport.authenticate('local', { 
+    successRedirect: '/dashboard', 
+    failureRedirect: '/', 
+    failureFlash: true, 
+    // successFlash: true 
+  })(req, res, next);
 });
 
 // Home Page - Register - POST /register
 router.post('/register', async (req, res, next) => {
-  const { email, username, firstname, lastname, password, password2, check } = req.body;
+  const { username, firstname, lastname, password, password2 } = req.body;
   try {
     let errors = [];
-    if (!email || !username || !firstname || !password || !password2 || !check) {
+    if (!username || !firstname || !password || !password2) {
       errors.push('Please fill all fields');
     }
     if (password !== password2) {
       errors.push('Passwords does not match');
-    }
-    if (password.length < 5) {
-      errors.push('Password atleast 5 characters');
-    }
-    const userEmail = await User.findOne({ email: email });
-    if (userEmail) {
-      errors.push('Email already registered');
     }
     const userName = await User.findOne({ username: username });
     if (userName) {
@@ -43,7 +41,7 @@ router.post('/register', async (req, res, next) => {
     } else {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
-      const newUser = await User.create({ email, username, password: hashedPassword, firstname, lastname });
+      const newUser = await User.create({ username, password: hashedPassword, firstname, lastname });
       req.flash('success', 'Successfully Registered');
       res.redirect('/');
     }
@@ -65,26 +63,43 @@ router.get('/dashboard', async (req, res, next) => {
       // res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true });   
     
 
-    if (req.user.isBasic) {
-      const user = await User.findById({ _id: req.user._id });
-      res.render('notverified', { user });
-    }
+    // if (req.user.isBasic) {
+    //   const user = await User.findById({ _id: req.user._id });
+    //   res.render('notverified', { user });
+    // }
 
-    if (req.user.isAdmin || req.user.isTeacher) {
+    const isAdmin = true;
+
+    if (isAdmin) {
       const usersArr = await User.find({}).lean();
       const users = usersArr.filter(user => !user.isAdmin && user.username !== "admin");
       users.forEach((user) => {
         user.url = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}/api/users/${user._id}` : `https://lmslbrn.herokuapp.com/api/users/${user._id}`;
       });
 
-      const user = await User.findById({ _id: req.user._id });
-      res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true, user });
+      // const user = await User.findById({ _id: req.user._id });
+      // res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true, user });
+      res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true });
+    } else {
+      // const user = await User.findById({ _id: req.user._id });
+      // res.render('student/dashboard', { title: 'Dashboard - Student', user })
+      res.render('student/dashboard', { title: 'Dashboard - Student' })
     }
+    // if (req.user.isAdmin || req.user.isTeacher) {
+    //   const usersArr = await User.find({}).lean();
+    //   const users = usersArr.filter(user => !user.isAdmin && user.username !== "admin");
+    //   users.forEach((user) => {
+    //     user.url = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}/api/users/${user._id}` : `https://lmslbrn.herokuapp.com/api/users/${user._id}`;
+    //   });
 
-    if (req.user.isStudent) {
-      const user = await User.findById({ _id: req.user._id });
-      res.render('student/dashboard', { title: 'Dashboard - Student', user });
-    }
+    //   const user = await User.findById({ _id: req.user._id });
+    //   res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true, user });
+    // }
+
+    // if (req.user.isStudent) {
+    //   const user = await User.findById({ _id: req.user._id });
+    //   res.render('student/dashboard', { title: 'Dashboard - Student', user });
+    // }
 
   } catch (err) { next(err) }
 })

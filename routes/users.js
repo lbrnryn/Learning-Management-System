@@ -60,8 +60,9 @@ router.get('/avatar/:filename', (req, res) => {
 
 // GET - /users/profile
 router.get('/profile', async (req, res) => {
-  const user = await User.findById({ _id: req.user._id });
-  res.render('admin/profile', { user });
+  // const user = await User.findById({ _id: req.user._id });
+  // res.render('admin/profile', { user });
+  res.render('admin/profile');
 });
 
 // Update profile - PUT /users/profile
