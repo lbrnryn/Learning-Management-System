@@ -14,97 +14,133 @@ const userForm = document.querySelector('#userForm');
 // const email = document.querySelector('#email');
 const username = document.querySelector('#username');
 const radioBtns = Array.from(document.querySelectorAll('.radioRoleBtn'));
-const editUserSubmitBtn = document.querySelector('.editUserSubmitBtn');
-const editUserCancelBtn = document.querySelector('.editUserCancelBtn');
-const deleteUserForms = document.querySelectorAll('.deleteUserForm');
+const submitEditUserBtn = document.querySelector('#submitEditUserBtn');
+const cancelEditUserBtn = document.querySelector('#cancelEditUserBtn');
+// const deleteUserForms = document.querySelectorAll('.deleteUserForm');
+const usersTable = document.querySelector("#usersTable");
 
-// Needs to clean the code
-// Edit button
-editUserBtns.forEach((editUserBtn) => {
-  editUserBtn.addEventListener('click', (e) => {
-    const editBtn = e.target.tagName === "I" ? e.target.parentElement: e.target;
+usersTable.addEventListener("click", async (e) => {
 
+  if (e.target.parentElement.classList.contains("editUserBtn")) {
+    const editUserBtn = e.target.parentElement;
     const url = editUserBtn.dataset.url;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        // console.log(data)
-        // Set form action
-        userForm.action = `/users/${data._id}?_method=PUT`; 
-        // email.disabled = false;
-        username.disabled = false;
-        // email.value = data.email;
-        username.value = data.username;
+    console.log("url", url)
 
-        radioBtns.forEach((radioBtn) => {
-          radioBtn.disabled = false;
-        });
+    const res = await fetch(url);
+    console.log(res)
+    const data = await res.json();
+    console.log(data);
+    userForm.action = `/api/users/${data._id}`;
+    username.disabled = false;
+    username.value = data.username;
+    radioBtns.forEach(radioBtn => {
+      radioBtn.disabled = false;
+      if (radioBtn.value === data.role) { radioBtn.checked = true }
+    });
+    submitEditUserBtn.disabled = false;
+    cancelEditUserBtn.style.display = 'block';
+  }
 
-
-        // Create Roles Array
-        const dataRoles = [
-          { basic: data.isBasic },
-          { student: data.isStudent},
-          { teacher: data.isTeacher},
-          { admin: data.isAdmin}
-        ];
-
-        // Loop through roles from data to find roles equivalent to true and returns basic/student/teacher/admin
-        dataRoles.forEach((dataRole, i) => {
-          if (dataRole.basic || dataRole.student || dataRole.teacher || dataRole.admin) {
-
-            // Loop through radio buttons for roles to find radio button that has id string of basic/student/teacher/admin equivalent to the return value from roles looping
-            radioBtns.forEach((radioBtn) => {
-              if (radioBtn.id === Object.keys(dataRole)[0]) {
-                radioBtn.checked = true;
-              }
-            });
-          }
-        });
-        editUserSubmitBtn.disabled = false;
-        editUserCancelBtn.style.display = 'block';
+  if (e.target.parentElement.classList.contains("deleteUserBtn")) {
+    const deleteUserBtn = e.target.parentElement;
+    const url = deleteUserBtn.dataset.url;
+    
+    if (confirm("Are you sure you want to delete this user?")) {
+      const res = await fetch(url, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
       });
+      // console.log(res);
+      const data = await res.json();
+      // console.log(data);
+      const tbody = usersTable.children[1];
+      const trows = Array.from(tbody.children);
+      trows.forEach(tr => {
+        if (tr.dataset.id === data._id) { tr.remove() }
+      });
+    }
+  }
 
-  });
 });
 
-// Alert message before changing user role - Admin - /dashboard
-if (userForm) {
-  userForm.addEventListener('submit', (e) => {
-    if (!confirm("Are you sure you want to update info of this user?")) {
-      e.preventDefault();
-    }
-  })
-}
-
 // Cancel button to clear input fields - Admin - /dashboard
-if (editUserCancelBtn) {
-  editUserCancelBtn.addEventListener('click', () => {
-    // email.disabled = true;
+if (cancelEditUserBtn) {
+  cancelEditUserBtn.addEventListener('click', () => {
+    userForm.action = "";
     username.disabled = true;
-    // email.value = "";
     username.value = "";
-    editUserSubmitBtn.disabled = true;
-    editUserCancelBtn.style.display = 'none';
-    radioBtns.forEach((radioBtn) => {
+    radioBtns.forEach(radioBtn => {
       radioBtn.checked = false;
       radioBtn.disabled = true;
     });
-    userForm.action = "";
+    submitEditUserBtn.disabled = true;
+    cancelEditUserBtn.style.display = 'none';
   })
 }
 
 // Delete button to remove user - Admin - /dashboard
 // console.log(deleteUserForm)
-if (deleteUserForms) {
-  deleteUserForms.forEach((deleteUserForm) => {
-    deleteUserForm.addEventListener('submit', (e) => {
-      if (!confirm('Are you sure you want to delete this user?')) {
-        e.preventDefault();
-      }
-    })
-  })
-}
+// if (deleteUserForms) {
+//   deleteUserForms.forEach((deleteUserForm) => {
+//     deleteUserForm.addEventListener('submit', (e) => {
+//       if (!confirm('Are you sure you want to delete this user?')) {
+//         e.preventDefault();
+//       }
+//     })
+//   })
+// }
+
+userForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  
+  if (!(confirm("Are you sure you want to update info of this user?"))) {
+    userForm.action = "";
+    username.disabled = true;
+    username.value = "";
+    radioBtns.forEach(radioBtn => {
+      radioBtn.disabled = true;
+      radioBtn.checked = false;
+    });
+    submitEditUserBtn.disabled = true;
+    cancelEditUserBtn.style.display = 'none';
+  } else {
+    const url = e.target.action;
+    const res = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: e.target.elements.username.value,
+        role: e.target.elements.role.value
+      })
+    });
+    const data = await res.json();
+    console.log(data)
+
+    const tbody = usersTable.children[1];
+    const trows = Array.from(tbody.children);
+    const trIndex = trows.findIndex(tr => tr.dataset.id === data._id);
+    trows[trIndex].innerHTML = `
+      <td class="text-capitalize">${data.username}</td>
+      <td class="text-capitalize">${data.role}</td>
+      <td class="d-flex">
+        <button type="button" class="border-0 bg-transparent editUserBtn" data-url="/api/users/${data._id}"><i class="bi bi-pencil-fill text-primary"></i></button>
+        <form class="deleteUserForm" action="/api/users/${data._id}?_method=DELETE" method="post">
+          <button class="border-0 bg-transparent" type="submit"><i class="bi bi-trash3-fill text-danger"></i></button>
+        </form>
+      </td>
+    `;
+
+    userForm.action = "";
+    username.disabled = true;
+    username.value = "";
+    radioBtns.forEach(radioBtn => {
+      radioBtn.disabled = true;
+      radioBtn.checked = false;
+    });
+    submitEditUserBtn.disabled = true;
+    cancelEditUserBtn.style.display = 'none';
+  }
+});
 
 // Admin - /classes
 const addStudentBtns = document.querySelectorAll('.addStudentBtn');

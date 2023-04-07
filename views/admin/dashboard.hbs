@@ -1,32 +1,24 @@
-<div class="container-lg">
+<div class="container-lg mt-5">
   <div class="row pt-4">
 
     <div class="col-lg-7 col-md-7">
-      <table id="roleTable" class="table table-sm table-bordered">
+      <table class="table table-sm table-bordered" id="usersTable">
         <thead>
           <th>Username</th>
           <th>Role</th>
           <th>Action</th>
         </thead>
         {{#each users}}
-        <tr>
+        <tr data-id="{{this._id}}">
           <td class="text-capitalize">{{this.username}}</td>
-          <td>
-            {{#if this.isBasic}}
-              Basic
-            {{else if this.isStudent}}
-              Student
-            {{else if this.isAdmin}}
-              Admin
-            {{else if this.isTeacher}}
-              Teacher
-            {{/if}}
-          </td>
+          <td class="text-capitalize">{{this.role}}</td>
           <td class="d-flex">
-            <button type="button" class="border-0 bg-transparent" id="editUserBtn" data-url="{{this.url}}"><i class="bi bi-pencil-fill text-primary"></i></button>
-            <form class="deleteUserForm" action="/api/users/{{this._id}}?_method=DELETE" method="post">
+            {{!-- <button type="button" class="border-0 bg-transparent editUserBtn" data-url="{{this.url}}"><i class="bi bi-pencil-fill text-primary"></i></button> --}}
+            <button type="button" class="border-0 bg-transparent editUserBtn" data-url="/api/users/{{this._id}}"><i class="bi bi-pencil-fill text-primary"></i></button>
+            <button type="submit" class="border-0 bg-transparent deleteUserBtn" data-url="/api/users/{{this._id}}"><i class="bi bi-trash3-fill text-danger"></i></button>
+            {{!-- <form class="deleteUserForm" action="/api/users/{{this._id}}?_method=DELETE" method="post">
               <button class="border-0 bg-transparent" type="submit"><i class="bi bi-trash3-fill text-danger"></i></button>
-            </form>
+            </form> --}}
           </td>
         </tr>
         {{/each}}
@@ -34,7 +26,7 @@
     </div>
 
     <div class="col-lg-4 col-md-4">
-      <form id="userForm" method="POST">
+      <form id="userForm">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" class="form-control form-control-sm" id="username" name="username" value="" disabled>
@@ -61,8 +53,9 @@
           </div>
         </div>
         <div id="editBtnGroup" class="d-grid gap-2 mb-3">
-          <input type="submit" class="btn btn-primary btn-sm editUserSubmitBtn" value="Edit" disabled>
-          <input type="button" class="btn btn-danger btn-sm editUserCancelBtn" value="Cancel">
+          <button type="submit" class="btn btn-primary btn-sm" id="submitEditUserBtn" disabled>Edit</button>
+          {{!-- <input type="submit" class="btn btn-primary btn-sm" id="submitEditUserBtn" value="Edit" disabled> --}}
+          <input type="button" class="btn btn-danger btn-sm" id="cancelEditUserBtn" value="Cancel">
         </div>
       </form>
 
