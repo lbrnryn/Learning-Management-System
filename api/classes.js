@@ -26,4 +26,11 @@ router.get('/:id', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
+// Delete a class - DELETE /api/classes/:id
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Class.findByIdAndDelete(req.params.id);
+  } catch (err) { next(err) }
+});
+
 module.exports = router;

@@ -69,13 +69,13 @@ router.put('/addstudents/:id', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
-// Class Page - Delete a class - DELETE /classes/:id
-router.delete('/:id', async (req, res, next) => {
-  try {
-    await Class.findByIdAndDelete({ _id: req.params.id });
-    req.flash('success', 'Class has been deleted!');
-    res.status(200).redirect('/classes');
-  } catch (err) { next(err) }
-});
+// // Class Page - Delete a class - DELETE /classes/:id
+// router.delete('/:id', async (req, res, next) => {
+//   try {
+//     await Class.findByIdAndDelete({ _id: req.params.id });
+//     req.flash('success', 'Class has been deleted!');
+//     res.status(200).redirect('/classes');
+//   } catch (err) { next(err) }
+// });
 
 module.exports = router;

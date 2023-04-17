@@ -59,3 +59,15 @@ addClassForm.addEventListener("submit", async (e) => {
     bootstrap.Modal.getInstance(`#addClassModal`).hide();
 
 });
+
+classTableBody.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("deleteStudentBtn")) {
+        const deleteStudentBtn = e.target;
+        const url = deleteStudentBtn.dataset.url;
+
+        if (confirm("Are you sure you want to delete this class?")) {
+            e.target.parentElement.parentElement.parentElement.remove();
+            await fetch(url, { method: "DELETE" });
+        }
+    }
+})
