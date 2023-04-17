@@ -2,6 +2,14 @@ const express = require("express");
 const router = express.Router();
 const Subject = require("../models/Subject");
 
+// Get all subjects - GET /api/subjects/
+router.get("/", async (req, res, next) => {
+  try {
+    const subjects = await Subject.find({});
+    res.json(subjects);
+  } catch (err) { next(err) }
+});
+
 // Updates a subject - PUT /api/subjects/:id
 router.put("/:id", async (req, res, next) => {
     try {

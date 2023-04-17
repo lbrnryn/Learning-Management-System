@@ -8,8 +8,7 @@ const User = require('../models/User');
 router.get('/', async (req, res, next) => {
   try {
 
-    // If logger is admin
-    // if (req.user.isAdmin || req.user.isTeacher) {
+    if (req.user.role === "admin") {
       const classes = await Class.find({}).populate('subject').populate('teacher').populate('student').lean();
 
       const sections = classes.map(singleclass => singleclass.section);
@@ -24,7 +23,7 @@ router.get('/', async (req, res, next) => {
       const teachers = users.filter(user => user.role === "teacher");
       const students = users.filter(user => user.role === "student");
 
-      // const user = await User.findById({ _id: req.user._id });
+      const user = await User.findById({ _id: req.user._id });
       res.render('admin/class', {
         title: 'Class - Admin',
         script: "./admin/class.js",
@@ -33,10 +32,10 @@ router.get('/', async (req, res, next) => {
         subjects,
         teachers,
         students,
-        admin: true,
-        user: true
+        // admin: true,
+        user
       });
-    // }
+    }
 
     // // If logger is student
     // if (req.user.isStudent) {
@@ -48,15 +47,15 @@ router.get('/', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
-// Class Page - Creates single class - POST /classes
-router.post('/', async (req, res, next) => {
-  try {
-    const { section, subject, teacher, day, timeStart, timeEnd, room } = req.body;
-    const newClass = await Class.create({ section: { name: section }, subject, teacher, day, timeStart, timeEnd, room });
-    req.flash('success', 'Successfully created a class!')
-    res.redirect('/classes');
-  } catch (err) { next(err) }
-});
+// // Class Page - Creates single class - POST /classes
+// router.post('/', async (req, res, next) => {
+//   try {
+//     const { section, subject, teacher, day, timeStart, timeEnd, room } = req.body;
+//     const newClass = await Class.create({ section: { name: section }, subject, teacher, day, timeStart, timeEnd, room });
+//     req.flash('success', 'Successfully created a class!')
+//     res.redirect('/classes');
+//   } catch (err) { next(err) }
+// });
 
 // Class Page - Adds single student - PUT /classes/addstudents/:id
 router.put('/addstudents/:id', async (req, res, next) => {

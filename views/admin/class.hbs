@@ -1,56 +1,14 @@
 <div class="container">
   <div class="row pt-4">
 
-    <div class="col-md-9">
+    {{!-- <div class="col-md-9"> --}}
+    <div class="col">
 
       {{> addClassModal}}
 
-      <div class="mb-5">
-        <h5>Sections</h5>
-        <div class="d-flex flex-wrap gap-3">
-          {{#each sections}}
-            <span class="badge bg-warning">{{this.name}}</span>
-          {{/each}}
-        </div>
-      </div>
-      <div class="table-responsive">
-        <h5>Classes</h5>
-        <table class="table table-sm small">
-          <thead>
-            <th>Section</th>
-            <th>Subject</th>
-            <th>Teacher</th>
-            <th>Time | Day</th>
-            <th>Room</th>
-            <th>Students</th>
-            <th>Action</th>
-          </thead>
-          <tbody>
-            {{#each classes}}
-            <tr>
-              <td class="text-nowrap text-uppercase">{{this.section.name}}</td>
-              <td class="text-nowrap text-capitalize">{{this.subject.title}} ({{this.subject.code}})</td>
-              <td class="text-capitalize text-nowrap">{{this.teacher.firstname}} {{this.teacher.lastname}}</td>
-              <td class="text-nowrap">{{this.timeStart}} - {{this.timeEnd}} | {{this.day}}</td>
-              <td class="text-nowrap">{{this.room}}</td>
-              <td>{{this.student.length}}</td>
-              <td class="d-flex justify-content-center align-items-center">
-                <button type="button" class="badge rounded-pill bg-primary border-0">Edit</button>
-                <form class="delClassForm" action="/classes/{{this._id}}?_method=DELETE" method="post">
-                  <button type="submit" class="badge rounded-pill bg-danger border-0">Delete</button>
-                </form>
-                <!-- <button type="button" class="badge rounded-pill bg-danger border-0">Delete</button> -->
-                <!-- <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl={{this.classesfetchurl}} data-studentsfetchurl={{this.studentsfetchurl}}>Add Student</button> -->
-                <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl="{{this.classesUrl}}" data-studentsfetchurl="{{this.studentsUrl}}">Add Student</button>
-              </td>
-            </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
     </div>
 
-    <div class="col-md-3 small">
+    {{!-- <div class="col-md-3 small">
       <p id="section">Section: </p>
       <p id="subject">Subject: </p>
       <p id="teacher">Teacher: </p>
@@ -65,10 +23,55 @@
           <input type="button" class="btn btn-danger btn-sm addStudentCancelBtn" value="Cancel">
         </div>
       </form>
-    </div>
+    </div> --}}
 
+  </div>
+
+  <div class="mb-5">
+    <h5>Sections</h5>
+    <div class="d-flex flex-wrap gap-3">
+      {{#each sections}}
+        <span class="badge bg-warning">{{this.name}}</span>
+      {{/each}}
     </div>
   </div>
+
+  <div class="table-responsive">
+    <h5>Classes</h5>
+    <table class="table table-sm small" id="classTable">
+      <thead>
+        <th>Section</th>
+        <th>Subject</th>
+        <th>Teacher</th>
+        <th>Time | Day</th>
+        <th>Room</th>
+        <th>Students</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        {{#each classes}}
+          <tr data-id="{{this._id}}">
+            <td class="text-nowrap text-uppercase">{{this.section.name}}</td>
+            <td class="text-nowrap text-capitalize">{{this.subject.title}} ({{this.subject.code}})</td>
+            <td class="text-capitalize text-nowrap">{{this.teacher.firstname}} {{this.teacher.lastname}}</td>
+            <td class="text-nowrap">{{this.timeStart}} - {{this.timeEnd}} | {{this.day}}</td>
+            <td class="text-nowrap">{{this.room}}</td>
+            <td>{{this.student.length}}</td>
+            <td class="d-flex justify-content-center align-items-center">
+              <button type="button" class="badge rounded-pill bg-primary border-0 editStudentBtn" data-url="/api/classes/{{this._id}}">Edit</button>
+              <button type="button" class="badge rounded-pill bg-danger border-0 deleteStudentBtn" data-url="/api/classes/{{this._id}}">Delete</button>
+              <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl="{{this.classesUrl}}" data-studentsfetchurl="{{this.studentsUrl}}">Add Student</button>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
 {{> messages}}
+
+{{!-- <form class="delClassForm" action="/classes/{{this._id}}?_method=DELETE" method="post">
+  <button type="submit" class="badge rounded-pill bg-danger border-0">Delete</button>
+</form> --}}
