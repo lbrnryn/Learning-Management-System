@@ -39,24 +39,6 @@ router.get('/', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
-// // Creates single subject - POST /subjects
-// router.post('/', async (req, res, next) => {
-//   try {
-//     const subject = await Subject.create(req.body);
-//     req.flash('success', 'Successfully added a subject!');
-//     res.redirect('/subjects');
-//   } catch (err) { next(err) }
-// });
-
-// Delete a subject - DELETE /subjects/:id
-router.delete('/:id', async (req, res, next) => {
-  try {
-    await Subject.findByIdAndDelete({ _id: req.params.id });
-    req.flash('success', 'Successfully deleted a subject');
-    res.redirect('/subjects');
-  } catch (err) { next(err) }
-})
-
 // Get all chapters of subject - GET /subjects/:id/chapters
 router.get('/:id/chapters', async (req, res, next) => {
   try {

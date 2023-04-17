@@ -111,6 +111,7 @@ addSubjectModal.addEventListener("hidden.bs.modal", (e) => {
 });
 
 const editSubjectForms = document.querySelectorAll(".editSubjectForm");
+
 editSubjectForms.forEach(editSubjectForm => {
   editSubjectForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -209,3 +210,17 @@ editSubjectForms.forEach(editSubjectForm => {
     `;
   });
 });
+
+const tbodys = document.querySelectorAll("table > tbody");
+// console.log(tbodys)
+tbodys.forEach(tbody => {
+  tbody.addEventListener("click", async (e) => {
+    if (e.target.parentElement.classList.contains("deleteSubjectBtn")) {
+      const deleteSubjectBtn = e.target.parentElement;
+      const url = deleteSubjectBtn.dataset.url;
+
+      deleteSubjectBtn.parentElement.parentElement.parentElement.remove();
+      await fetch(url, { method: "DELETE" })
+    }
+  })
+})

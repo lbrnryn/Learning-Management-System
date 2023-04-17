@@ -10,6 +10,13 @@ router.put("/:id", async (req, res, next) => {
     } catch (err) { next(err) }
 });
 
+// Delete a subject - DELETE /api/subjects/:id
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Subject.findByIdAndDelete(req.params.id);
+  } catch (err) { next(err) }
+})
+
 // Creates single subject - POST /api/subjects
 router.post('/', async (req, res, next) => {
     try {
