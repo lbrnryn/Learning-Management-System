@@ -26,6 +26,14 @@ router.get('/:id', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
+// Update a class - PUT /api/classes/:id
+router.put('/:id', async (req, res, next) => {
+  try {
+    const updClass = await Class.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updClass);
+  } catch (err) { next(err) }
+});
+
 // Delete a class - DELETE /api/classes/:id
 router.delete('/:id', async (req, res, next) => {
   try {
