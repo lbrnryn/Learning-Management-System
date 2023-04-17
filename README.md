@@ -1,0 +1,1 @@
+This Learning Management System showcases my knowledge in creating server-side rendered applications using Express.js. It demonstrates my ability to fetch data from a MongoDB database using the Fetch API and Mongoose.js within my own API.
