@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Class = require('../../models/Class');
+const Class = require('../models/Class');
 
 // Gets all class - GET /api/classes
 router.get('/', async (req, res, next) => {

@@ -10,67 +10,43 @@ const formatSubjects = require("../helper");
 // router.get('/', checkAuthenticated, async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
-    // console.log(formatSubjects)
-    const subjects = await Subject.find({}).lean();
 
-    res.render('admin/subjects', {
-      title: 'Subjects - Admin',
-      subjects,
-      admin: true,
-      helpers: {
-        firstYearFirstTrimester(subjects) {
-          return formatSubjects(subjects, "1st Year", "1st Trimester")
-        },
-        firstYearSecondTrimester(subjects) {
-          return formatSubjects(subjects, "1st Year", "2nd Trimester")
-        },
-        firstYearThirdTrimester(subjects) {
-          return formatSubjects(subjects, "1st Year", "3rd Trimester")
-        },
-        secondYearFirstTrimester(subjects) {
-          return formatSubjects(subjects, "2nd Year", "1st Trimester")
-        },
-        secondYearSecondTrimester(subjects) {
-          return formatSubjects(subjects, "2nd Year", "2nd Trimester")
-        },
-        secondYearThirdTrimester(subjects) {
-          return formatSubjects(subjects, "2nd Year", "3rd Trimester")
-        },
-        thirdYearFirstTrimester(subjects) {
-          return formatSubjects(subjects, "3rd Year", "1st Trimester")
-        },
-        thirdYearSecondTrimester(subjects) {
-          return formatSubjects(subjects, "3rd Year", "2nd Trimester")
-        },
-        thirdYearThirdTrimester(subjects) {
-          return formatSubjects(subjects, "3rd Year", "3rd Trimester")
-        },
-        fourthYearFirstTrimester(subjects) {
-          return formatSubjects(subjects, "4th Year", "1st Trimester")
+    if (req.user.role === "admin") {
+      const subjects = await Subject.find({}).lean();
+
+      res.render('admin/subjects', {
+        title: 'Subjects - Admin',
+        script: "./admin/subject.js",
+        subjects,
+        admin: true,
+        user: true,
+        helpers: {
+          firstYearFirstTrimester(subjects) { return formatSubjects(subjects, "1st", "1st") },
+          firstYearSecondTrimester(subjects) { return formatSubjects(subjects, "1st", "2nd") },
+          firstYearThirdTrimester(subjects) { return formatSubjects(subjects, "1st", "3rd") },
+          secondYearFirstTrimester(subjects) { return formatSubjects(subjects, "2nd", "1st") },
+          secondYearSecondTrimester(subjects) { return formatSubjects(subjects, "2nd", "2nd") },
+          secondYearThirdTrimester(subjects) { return formatSubjects(subjects, "2nd", "3rd") },
+          thirdYearFirstTrimester(subjects) { return formatSubjects(subjects, "3rd", "1st") },
+          thirdYearSecondTrimester(subjects) { return formatSubjects(subjects, "3rd", "2nd") },
+          thirdYearThirdTrimester(subjects) { return formatSubjects(subjects, "3rd", "3rd") },
+          fourthYearFirstTrimester(subjects) { return formatSubjects(subjects, "4th", "1st") }
         }
-      }
-    });
+      });
+
+    }
 
   } catch (err) { next(err) }
 });
 
-// Creates single subject - POST /subjects
-router.post('/', async (req, res, next) => {
-  try {
-    const { year, semester, code, title, units, prerequisite } = req.body;
-    const subject = await Subject.create({ year, semester, code, title, units, prerequisite });
-    req.flash('success', 'Successfully added a subject!');
-    res.redirect('/subjects');
-  } catch (err) { next(err) }
-});
-
-// Updates a subject - PUT /subjects/:id
-router.put("/:id", async (req, res, next) => {
-  try {
-    await Subject.findByIdAndUpdate(req.params.id, req.body);
-    res.redirect("/subjects");
-  } catch (err) { next(err) }
-})
+// // Creates single subject - POST /subjects
+// router.post('/', async (req, res, next) => {
+//   try {
+//     const subject = await Subject.create(req.body);
+//     req.flash('success', 'Successfully added a subject!');
+//     res.redirect('/subjects');
+//   } catch (err) { next(err) }
+// });
 
 // Delete a subject - DELETE /subjects/:id
 router.delete('/:id', async (req, res, next) => {
@@ -80,6 +56,77 @@ router.delete('/:id', async (req, res, next) => {
     res.redirect('/subjects');
   } catch (err) { next(err) }
 })
+
+// Get all chapters of subject - GET /subjects/:id/chapters
+router.get('/:id/chapters', async (req, res, next) => {
+  try {
+    // if (req.user.isAdmin || req.user.isTeacher) {
+      const chapters = await Chapter.find({ subject: req.params.id }).lean();
+      const subject = await Subject.findById({ _id: req.params.id }).lean();
+      // const user = await User.findById({ _id: req.user._id });
+      res.render('admin/chapters', { subject, chapters, admin: true, user: true });
+    // }
+    // if (req.user.isStudent) {
+    //   const subject = await Subject.findById({ _id: req.params.id});
+    //   const chapters = await Chapter.find({ subject: req.params.id }).populate('subject').lean();
+    //   const chapterIds = chapters.map((chapter) => chapter._id.toString());
+    //   const user = await User.findById({ _id: req.user._id }).lean();
+
+    //   if (user.quizzes) {
+    //     user.quizzes.forEach((quiz) => {
+    //       if (chapterIds.includes(quiz.chapter) && quiz.isQuizAnswered) {
+    //         chapters.forEach((chapter) => {
+    //           chapter.quiz = {
+    //             isQuizAnswered: quiz.isQuizAnswered,
+    //             score: quiz.score,
+    //             questionsLength: quiz.questionsLength
+    //           }
+    //         });
+    //       }
+    //     });
+    //   }
+
+    //   if (user.pretests) {
+    //     user.pretests.forEach((pretest) => {
+    //       if (chapterIds.includes(pretest.chapter) && pretest.isPretestAnswered) {
+    //         chapters.forEach((chapter) => {
+    //           chapter.pretest = {
+    //             isPretestAnswered: pretest.isPretestAnswered,
+    //             score: pretest.score,
+    //             questionsLength: pretest.questionsLength
+    //           }
+    //         });
+    //       }
+    //     });
+    //   }
+
+    //   if (user.posttests) {
+    //     user.posttests.forEach((posttest) => {
+    //       if (chapterIds.includes(posttest.chapter) && posttest.isPosttestAnswered) {
+    //         chapters.forEach((chapter) => {
+    //           chapter.posttest = {
+    //             isPosttestAnswered: posttest.isPosttestAnswered,
+    //             score: posttest.score,
+    //             questionsLength: posttest.questionsLength
+    //           }
+    //         });
+    //       }
+    //     });
+    //   }
+
+    //   res.render('student/chapters', { subject, chapters, user });
+    // }
+  } catch (err) { next(err) }
+});
+
+// Creates single chapter of subject - POST /subjects/:id/chapters
+router.post('/:id/chapters', async (req, res, next) => {
+  try {
+    const { title, lesson } = req.body;
+    await Chapter.create({ subject: req.params.id, title, lesson });
+    res.redirect(`/subjects/${req.params.id}/chapters`);
+  } catch (err) { next(err) }
+});
 
 // // GET - /subjects/chapters/:id/quizzes
 // router.get('/chapters/:id/quizzes', async (req, res) => {

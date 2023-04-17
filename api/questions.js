@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 // const Chapter = require('../../models/Chapter');
-const Questions = require('../../models/Question');
+const Questions = require('../models/Question');
 
 // /api/questions/quiz/chapter/:id
 router.get('/quiz/chapter/:id', async (req, res, next) => {

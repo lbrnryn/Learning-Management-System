@@ -1,80 +1,9 @@
-<div class="container-lg">
+<div class="container">
   <div class="row pt-4">
 
     <div class="col-md-9">
 
-      <button type="button" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#addClass">Add Class</button>
-      <div id="addClass" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <form action="/classes" method="post">
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col input-group mb-3">
-                    <span class="input-group-text">Section</span>
-                    <input type="text" class="form-control" name="section" required>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col input-group mb-3">
-                    <label class="input-group-text" for="subject">Subject</label>
-                    <select class="form-select" name="subject" required>
-                      <option value="">Choose a Subject...</option>
-                      {{#each subjects}}
-                        <option value={{this._id}}>{{this.title}}({{this.code}})</option>
-                      {{/each}}
-                    </select>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col input-group mb-3">
-                    <label class="input-group-text" for="teacher">Teacher</label>
-                    <select class="form-select" name="teacher" required>
-                      <option value="">Choose a Teacher...</option>
-                      {{#each teachers}}
-                        <option value={{this._id}}>{{this.firstname}} {{this.lastname}}</option>
-                      {{/each}}
-                    </select>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col input-group">
-                    <span class="input-group-text">Time Start</span>
-                    <input type="text" class="form-control" name="timeStart" required>
-                  </div>
-                  <div class="col input-group">
-                    <span class="input-group-text">Time End</span>
-                    <input type="text" class="form-control" name="timeEnd" required>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col input-group">
-                    <label class="input-group-text" for="day">Day</label>
-                    <select class="form-select" name="day" required>
-                      <option value="">Choose a Day...</option>
-                      <option value="Monday">Monday</option>
-                      <option value="Tuesday">Tuesday</option>
-                      <option value="Wednesday">Wednesday</option>
-                      <option value="Thursday">Thursday</option>
-                      <option value="Friday">Friday</option>
-                      <option value="Saturday">Saturday</option>
-                      <option value="Sunday">Sunday</option>
-                    </select>
-                  </div>
-                  <div class="col input-group">
-                    <span class="input-group-text">Room</span>
-                    <input type="text" class="form-control" name="room" required>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+      {{> addClassModal}}
 
       <div class="mb-5">
         <h5>Sections</h5>
@@ -86,7 +15,7 @@
       </div>
       <div class="table-responsive">
         <h5>Classes</h5>
-        <table class="table table-sm">
+        <table class="table table-sm small">
           <thead>
             <th>Section</th>
             <th>Subject</th>
@@ -99,8 +28,8 @@
           <tbody>
             {{#each classes}}
             <tr>
-              <td class="text-nowrap">{{this.section.name}}</td>
-              <td class="text-nowrap">{{this.subject.title}} ({{this.subject.code}})</td>
+              <td class="text-nowrap text-uppercase">{{this.section.name}}</td>
+              <td class="text-nowrap text-capitalize">{{this.subject.title}} ({{this.subject.code}})</td>
               <td class="text-capitalize text-nowrap">{{this.teacher.firstname}} {{this.teacher.lastname}}</td>
               <td class="text-nowrap">{{this.timeStart}} - {{this.timeEnd}} | {{this.day}}</td>
               <td class="text-nowrap">{{this.room}}</td>
@@ -121,7 +50,7 @@
       </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 small">
       <p id="section">Section: </p>
       <p id="subject">Subject: </p>
       <p id="teacher">Teacher: </p>

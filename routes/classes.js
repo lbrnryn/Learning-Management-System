@@ -9,33 +9,41 @@ router.get('/', async (req, res, next) => {
   try {
 
     // If logger is admin
-    if (req.user.isAdmin || req.user.isTeacher) {
+    // if (req.user.isAdmin || req.user.isTeacher) {
       const classes = await Class.find({}).populate('subject').populate('teacher').populate('student').lean();
 
-      const sections = classes.map((singleclass) => {
-        return singleclass.section
-      });
+      const sections = classes.map(singleclass => singleclass.section);
 
-      classes.forEach((singleclass) => {
+      classes.forEach(singleclass => {
         singleclass.classesUrl = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}/api/classes/${singleclass._id}` : `https://lmslbrn.herokuapp.com/api/classes/${singleclass._id}`;
         singleclass.studentsUrl = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}/api/users/students` : `https://lmslbrn.herokuapp.com/api/users/students`;
       });
 
       const subjects = await Subject.find({}).lean();
       const users = await User.find({}).lean();
-      const teachers = users.filter(user => user.isTeacher);
-      const students = users.filter(user => user.isStudent);
+      const teachers = users.filter(user => user.role === "teacher");
+      const students = users.filter(user => user.role === "student");
 
-      const user = await User.findById({ _id: req.user._id });
-      res.render('admin/class', { title: 'Class - Admin', sections, classes, subjects, teachers, students, admin: true, user });
-    }
+      // const user = await User.findById({ _id: req.user._id });
+      res.render('admin/class', {
+        title: 'Class - Admin',
+        script: "./admin/class.js",
+        sections,
+        classes,
+        subjects,
+        teachers,
+        students,
+        admin: true,
+        user: true
+      });
+    // }
 
-    // If logger is student
-    if (req.user.isStudent) {
-      const classes = await Class.find({ student: { _id: req.user._id } }).populate('subject').populate('student');
-      const user = await User.findById({ _id: req.user._id });
-      res.render('student/class', { title: 'Class - Student', classes, user })
-    }
+    // // If logger is student
+    // if (req.user.isStudent) {
+    //   const classes = await Class.find({ student: { _id: req.user._id } }).populate('subject').populate('student');
+    //   const user = await User.findById({ _id: req.user._id });
+    //   res.render('student/class', { title: 'Class - Student', classes, user })
+    // }
 
   } catch (err) { next(err) }
 });

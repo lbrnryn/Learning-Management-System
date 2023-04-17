@@ -43,11 +43,12 @@ app.use('/classes', require('./routes/classes'));
 app.use('/questions', require('./routes/questions'));
 
 // API
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/classes', require('./routes/api/classes'));
-app.use('/api/chapters', require('./routes/api/chapters'));
-// app.use('/api/quizQuestions', require('./routes/api/quizQuestions'));
-app.use('/api/questions', require('./routes/api/questions'));
+app.use('/api/users', require('./api/users'));
+app.use('/api/classes', require('./api/classes'));
+app.use('/api/chapters', require('./api/chapters'));
+app.use('/api/subjects', require('./api/subjects'));
+// app.use('/api/quizQuestions', require('./api/quizQuestions'));
+app.use('/api/questions', require('./api/questions'));
 
 // Error handling
 // Working when going to route/s does not exist

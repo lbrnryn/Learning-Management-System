@@ -1,29 +1,30 @@
-<button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addSubject">Add Subject</button>
+<button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addSubjectModal">Add Subject</button>
       
-<div id="addSubject" class="modal fade" tabindex="-1">
+<div id="addSubjectModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
 
-        <form action="/subjects" method="post">
+        {{!-- <form action="/subjects" method="post" id="addSubjectForm"> --}}
+        <form id="addSubjectForm">
             <div class="modal-body">
             <div class="row">
                 <div class="col input-group mb-3">
                 <label class="input-group-text" for="year">Year</label>
-                <select class="form-select" name="year" required>
+                <select class="form-select" id="year" name="year" required>
                     <option value="">Choose Year...</option>
-                    <option value="1st Year">1st Year</option>
-                    <option value="2nd Year">2nd Year</option>
-                    <option value="3rd Year">3rd Year</option>
-                    <option value="4th Year">4th Year</option>
+                    <option value="1st">1st Year</option>
+                    <option value="2nd">2nd Year</option>
+                    <option value="3rd">3rd Year</option>
+                    <option value="4th">4th Year</option>
                 </select>
                 </div>
                 <div class="col input-group mb-3">
-                <label class="input-group-text" for="semester">Trimester</label>
-                <select class="form-select" name="semester" required>
+                <label class="input-group-text" for="trimester">Trimester</label>
+                <select class="form-select" id="trimester" name="trimester" required>
                     <option value="">Choose Trimester...</option>
-                    <option value="1st Trimester">1st Trimester</option>
-                    <option value="2nd Trimester">2nd Trimester</option>
-                    <option value="3rd Trimester">3rd Trimester</option>
+                    <option value="1st">1st Trimester</option>
+                    <option value="2nd">2nd Trimester</option>
+                    <option value="3rd">3rd Trimester</option>
                 </select>
                 </div>
             </div>
