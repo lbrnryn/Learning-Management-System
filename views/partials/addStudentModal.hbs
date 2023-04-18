@@ -1,0 +1,31 @@
+<button type="button" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add Student To Class</button>
+
+<div id="addStudentModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form id="addStudentForm">
+                <div class="modal-body">
+                    <select class="form-select form-select-sm mb-2" name="class">
+                        <option value="">Select Class...</option>
+                        {{#each classes}}
+                            {{!-- <option class="text-capitalize" value="this._id">{{this.section}} | {{this.subject.title}} ({{this.subject.code}}) | {{this.teacher.firstname}} {{this.teacher.lastname}} | {{this.timeStart}} - {{this.timeEnd}} | {{this.day}} | {{this.room}} | {{this.student.length}}</option> --}}
+                            <option class="text-capitalize" value="{{this._id}}">{{this.section}} | {{this.subject.code}} | {{this.teacher.firstname}} {{this.teacher.lastname}} | {{this.timeStart}} - {{this.timeEnd}} | {{this.day}} | {{this.room}}</option>
+                        {{/each}}
+                    </select>
+                    <input type="text" class="form-control form-control-sm mb-5" id="searchStudentInput" disabled>
+                    <div class="mb-5" id="studentsDiv">
+                        {{!-- {{#each students}}
+                            <div class="form-check" data-name="{{this.firstname}} {{this.lastname}}">
+                                <input type="checkbox" class="form-check-input" id="student{{this._id}}" name="students" value="{{this._id}}">
+                                <label class="form-check-label" for="student{{this._id}}">{{this.firstname}} {{this.lastname}}</label>
+                            </div>
+                        {{/each}} --}}
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-sm btn-primary" id="submitStudentFormBtn" disabled>Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

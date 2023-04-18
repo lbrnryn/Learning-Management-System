@@ -1,14 +1,16 @@
 <div class="container">
-  <div class="row pt-4">
+  <div class="row pt-4 mb-5">
 
     {{!-- <div class="col-md-9"> --}}
     <div class="col">
 
       {{> addClassModal}}
+      
+      {{> addStudentModal}}
 
     </div>
 
-    {{!-- <div class="col-md-3 small">
+    {{!-- <div class="col small">
       <p id="section">Section: </p>
       <p id="subject">Subject: </p>
       <p id="teacher">Teacher: </p>
@@ -27,14 +29,14 @@
 
   </div>
 
-  <div class="mb-5">
+  {{!-- <div class="mb-5">
     <h5>Sections</h5>
     <div class="d-flex flex-wrap gap-3">
       {{#each classes}}
         <span class="badge bg-warning text-uppercase">{{this.section}}</span>
       {{/each}}
     </div>
-  </div>
+  </div> --}}
 
   <div class="table-responsive">
     <h5>Classes</h5>
@@ -56,12 +58,11 @@
             <td class="text-capitalize text-nowrap">{{this.teacher.firstname}} {{this.teacher.lastname}}</td>
             <td class="text-nowrap">{{this.timeStart}} - {{this.timeEnd}} | {{this.day}}</td>
             <td class="text-nowrap">{{this.room}}</td>
-            <td>{{this.student.length}}</td>
+            <td id="studentsLength">{{this.students.length}}</td>
             <td>
               <div class="d-flex align-items-end">
                 <button type="button" class="badge rounded-pill bg-primary border-0 editStudentBtn" data-url="/api/classes/{{this._id}}">Edit</button>
                 <button type="button" class="badge rounded-pill bg-danger border-0 deleteStudentBtn" data-url="/api/classes/{{this._id}}">Delete</button>
-                <button type="button" class="badge rounded-pill bg-success border-0 addStudentBtn" data-classesfetchurl="{{this.classesUrl}}" data-studentsfetchurl="{{this.studentsUrl}}">Add Student</button>
               </div>
             </td>
           </tr>
@@ -71,9 +72,3 @@
   </div>
 
 </div>
-
-{{> messages}}
-
-{{!-- <form class="delClassForm" action="/classes/{{this._id}}?_method=DELETE" method="post">
-  <button type="submit" class="badge rounded-pill bg-danger border-0">Delete</button>
-</form> --}}
