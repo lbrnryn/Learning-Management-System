@@ -3,38 +3,38 @@
 <div class="modal fade" id="loginModal">
     <div class="modal-dialog">
         <div class="modal-content text-dark">
-        <div class="modal-body">
+            <div class="modal-body">
 
-            <div class="d-flex justify-content-around my-3">
-                <form action="/" method="post">
-                    <input type="hidden" name="username" value="admin">
-                    <input type="hidden" name="password" value="admin">
-                    <button class="btn btn-sm btn-primary">Login as Admin</button>
-                </form>
+                <div class="d-flex justify-content-around my-3">
+                    <form action="/" method="post">
+                        <input type="hidden" name="username" value="admin">
+                        <input type="hidden" name="password" value="admin">
+                        <button class="btn btn-sm btn-primary">Login as Admin</button>
+                    </form>
+
+                    <form action="/" method="post">
+                            <input type="hidden" name="username" value="student">
+                            <input type="hidden" name="password" value="student">
+                            <button class="btn btn-sm btn-primary">Login as Student</button>
+                    </form>
+                </div>
+
+                <p class="text-center small">OR</p>
 
                 <form action="/" method="post">
-                        <input type="hidden" name="username" value="student">
-                        <input type="hidden" name="password" value="student">
-                        <button class="btn btn-sm btn-primary">Login as Student</button>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Username" required>
+                        <label for="loginUsername">Username</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Password" required>
+                        <label for="loginPassword">Password</label>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-sm btn-primary">Login</button>
+                    </div>
                 </form>
             </div>
-
-            <p class="text-center small">OR</p>
-
-            <form action="/" method="post">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Username" required>
-                    <label for="loginUsername">Username</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Password" required>
-                    <label for="loginPassword">Password</label>
-                </div>
-                <div class="d-grid">
-                    <button class="btn btn-sm btn-primary">Login</button>
-                </div>
-            </form>
-        </div>
         </div>
     </div>
 </div>

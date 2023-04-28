@@ -1,7 +1,7 @@
 {{#if success}}
-  <div class="toast-container position-fixed bottom-0 end-0 removeToast">
+  <div class="toast-container position-fixed bottom-0 end-0 p-2">
     {{#each success}}
-    <div class="toast show">
+    <div class="toast fade show">
       <div class="toast-header d-flex justify-content-between align-items-center bg-primary">
         <p class="me-auto mb-0 text-white">Leaning Management System</p>
         <button type="button" class="btn-close text-white" data-bs-dismiss="toast"></button>
@@ -13,9 +13,9 @@
 {{/if}}
 
 {{#if errors}}
-  <div class="toast-container position-fixed bottom-0 end-0 removeToast">
+  <div class="toast-container position-fixed bottom-0 end-0 p-2">
     {{#each errors}}
-    <div class="toast show">
+    <div class="toast fade show">
       <div class="toast-header d-flex justify-content-between bg-danger">
         <p class="me-auto mb-0 text-white">Error</p>
         <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
@@ -27,9 +27,9 @@
 {{/if}}
 
 {{#if error}}
-  <div class="toast-container position-fixed bottom-0 end-0 removeToast">
+  <div class="toast-container position-fixed bottom-0 end-0 p-2">
     {{#each error}}
-    <div class="toast show">
+    <div class="toast fade show">
       <div class="toast-header d-flex justify-content-between bg-danger">
         <p class="me-auto mb-0 text-white">Error</p>
         <button type="button" class="btn-close" data-bs-dismiss="toast"></button>

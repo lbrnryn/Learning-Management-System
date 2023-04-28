@@ -2,10 +2,11 @@
 
 body {
   font-family: 'Poppins', sans-serif;
+  /* background: rgb(0,16,133);
+  background: linear-gradient(117deg, rgba(0,16,133,1) 0%, rgba(157,0,0,1) 100%, rgba(255,255,255,1) 100%);
+  height: 100vh; */
 }
 
 #cancelEditUserBtn, .editSaveProfileBtn, .editCancelProfileBtn, .addStudentCancelBtn {
   display: none;
 }
-
-/* Font should be poppins */

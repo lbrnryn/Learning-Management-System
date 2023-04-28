@@ -8,7 +8,7 @@ const { checkAuthenticated } = require('../middleware.js');
 
 // Home Page - GET /
 router.get('/', (req, res) => {
-  res.render('home', { title: 'LMS - Home' });
+  res.render('home', { title: 'LMS - Home', script: './home.js', home: true });
 });
 
 // Home Page - login - POST /

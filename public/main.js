@@ -1,11 +1,11 @@
 
 // Remove toast notification after 2 seconds
-const removeToast = document.querySelector('.removeToast');
-if (removeToast) {
-  setTimeout(() => {
-    removeToast.remove()
-  }, 2000)
-}
+// const removeToast = document.querySelector('.removeToast');
+// if (removeToast) {
+//   setTimeout(() => {
+//     removeToast.remove()
+//   }, 2000)
+// }
 
 //--------------------------------------------------
 

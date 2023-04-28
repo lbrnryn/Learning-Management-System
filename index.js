@@ -8,9 +8,26 @@ const passport = require('passport');
 require('./config/passport')(passport);
 const cors = require('cors');
 const methodOverride = require('method-override');
+const path = require("path");
 
 const app = express();
-app.use(express.static('public'));
+// app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/subjects", express.static(path.join(__dirname, "public")));
+// app.use("/subjects/:id", function(req, res, next) {
+//   if (/^\d{11}[a-zA-Z0-9]+$/.test(req.params.id)) {
+//     return express.static(path.join(__dirname, "public"))(req, res, next);
+//   } else {
+//     next();
+//   }
+// });
+app.use("/subjects/:id", function(req, res, next) {
+  if (/^[0-9a-zA-z]{24}$/.test(req.params.id)) {
+    return express.static(path.join(__dirname, "public"))(req, res, next);
+  } else {
+    next();
+  }
+});
 app.engine('.hbs', engine({ extname: ".hbs" }));
 app.set('view engine', '.hbs');
 app.set('views', './views');

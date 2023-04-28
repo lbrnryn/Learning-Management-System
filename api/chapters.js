@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Chapter = require('../models/Chapter');
 
+// Add chapter - POST /api/chapters
+router.post("/", async (req, res, next) => {
+  try {
+    const newChapter = await Chapter.create(req.body);
+    res.json(newChapter);
+  } catch (err) { next(err) }
+});
+
 // /api/chapters/:id/quiz
 router.get('/:id/quiz', async (req, res, next) => {
   try {

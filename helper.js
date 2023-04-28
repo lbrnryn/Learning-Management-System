@@ -66,8 +66,8 @@ module.exports = function formatSubjects (subjects, year, trimester) {
   function tableHTML(rows) {
       return `
         <div class="table-responsive">
-          <table class="table table-sm caption-top mb-5" data-id="${year}Year${trimester}Trimester">
-            <caption>${year} Year ${trimester} Trimester</caption>
+          <table class="table table-sm caption-top mb-5 text-white" data-id="${year}Year${trimester}Trimester">
+            <caption class="text-white">${year} Year ${trimester} Trimester</caption>
             <thead>
               <tr>
                 <th>Code</th>

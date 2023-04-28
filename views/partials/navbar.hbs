@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light shadow">
+{{!-- <nav class="navbar navbar-expand-lg navbar-dark"> --}}
   <div class="container">
     <a class="navbar-brand me-4 d-flex justify-content-around align-items-center" href="/">
       <div class="ms-2">
@@ -9,7 +10,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-        {{#if user}}
+      {{#if user}}
         <ul class="navbar-nav d-flex flex-row gap-2">
           <li class="nav-item">
             <a class="nav-link" href="/dashboard"><i class="bi bi-house-door-fill me-2"></i>Dashboard</a>
@@ -24,16 +25,32 @@
             <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
           </li>
         </ul>
-        {{else}}
-        <ul class="navbar-nav ms-auto d-flex flex-row">
+      {{/if}}
+      {{!-- {{#if user}}
+      <ul class="navbar-nav d-flex flex-row gap-2">
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard"><i class="bi bi-house-door-fill me-2"></i>Dashboard</a>
+        </li>
           <li class="nav-item">
-            {{> loginModal}}
+            <a class="nav-link" href="/subjects"><i class="bi bi-journals me-2"></i>Subjects</a>
           </li>
-          <li class="nav-item">
-            {{> registerModal}}
-          </li>
-        </ul>
-        {{/if}}
+        <li class="nav-item">
+          <a class="nav-link" href="/classes"><i class="bi bi-book me-2"></i>Classes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+        </li>
+      </ul>
+      {{else}}
+      <ul class="navbar-nav ms-auto d-flex flex-row">
+        <li class="nav-item">
+          {{> loginModal}}
+        </li>
+        <li class="nav-item">
+          {{> registerModal}}
+        </li>
+      </ul>
+      {{/if}} --}}
     </div>
   </div>
 </nav>

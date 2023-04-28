@@ -46,7 +46,7 @@ router.get('/:id/chapters', async (req, res, next) => {
       const chapters = await Chapter.find({ subject: req.params.id }).lean();
       const subject = await Subject.findById({ _id: req.params.id }).lean();
       // const user = await User.findById({ _id: req.user._id });
-      res.render('admin/chapters', { subject, chapters, admin: true, user: true });
+      res.render('admin/chapters', { subject, chapters, admin: true, user: true, script: "./admin/chapter.js" });
     // }
     // if (req.user.isStudent) {
     //   const subject = await Subject.findById({ _id: req.params.id});
@@ -101,14 +101,14 @@ router.get('/:id/chapters', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
-// Creates single chapter of subject - POST /subjects/:id/chapters
-router.post('/:id/chapters', async (req, res, next) => {
-  try {
-    const { title, lesson } = req.body;
-    await Chapter.create({ subject: req.params.id, title, lesson });
-    res.redirect(`/subjects/${req.params.id}/chapters`);
-  } catch (err) { next(err) }
-});
+// // Creates single chapter of subject - POST /subjects/:id/chapters
+// router.post('/:id/chapters', async (req, res, next) => {
+//   try {
+//     const { title, lesson } = req.body;
+//     await Chapter.create({ subject: req.params.id, title, lesson });
+//     res.redirect(`/subjects/${req.params.id}/chapters`);
+//   } catch (err) { next(err) }
+// });
 
 // // GET - /subjects/chapters/:id/quizzes
 // router.get('/chapters/:id/quizzes', async (req, res) => {
