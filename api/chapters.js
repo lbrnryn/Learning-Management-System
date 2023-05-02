@@ -18,12 +18,29 @@ router.get('/:id/quiz', async (req, res, next) => {
   } catch (err) { next(err) }
 });
 
-// Get all chapters with subject id /api/chapters/:id
+// Get chapter with subject id /api/chapters/:id
 router.get('/:id', async (req, res, next) => {
   try {
-    const chapters = await Chapter.find({ subject: req.params.id }).populate('subject');
-    res.json(chapters);
+    const chapter = await Chapter.findById(req.params.id)
+    res.json(chapter);
   } catch (err) { next(err) }
 });
+
+// Update chapter with subject id /api/chapters/:id
+router.put('/:id', async (req, res, next) => {
+  try {
+    const updChapter = await Chapter.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updChapter);
+  } catch (err) { next(err) }
+});
+
+// Delete chapter with subject id /api/chapters/:id
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Chapter.findByIdAndDelete(req.params.id);
+  } catch (err) { next(err) }
+});
+
+
 
 module.exports = router;

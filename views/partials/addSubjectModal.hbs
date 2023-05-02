@@ -1,59 +1,59 @@
-<button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addSubjectModal">Add Subject</button>
+<button type="button" class="btn btn-sm bg-success-subtle" data-bs-toggle="modal" data-bs-target="#addSubjectModal">Add Subject</button>
       
 <div id="addSubjectModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
 
-        {{!-- <form action="/subjects" method="post" id="addSubjectForm"> --}}
-        <form id="addSubjectForm">
-            <div class="modal-body">
-            <div class="row">
-                <div class="col input-group mb-3">
-                <label class="input-group-text" for="year">Year</label>
-                <select class="form-select" id="year" name="year" required>
-                    <option value="">Choose Year...</option>
-                    <option value="1st">1st Year</option>
-                    <option value="2nd">2nd Year</option>
-                    <option value="3rd">3rd Year</option>
-                    <option value="4th">4th Year</option>
-                </select>
+            <form id="addSubjectForm">
+                <div class="modal-body">
+                <div class="row">
+                    <div class="col input-group mb-3">
+                    <label class="input-group-text" for="year">Year</label>
+                    <select class="form-select form-select-sm" id="year" name="year" required>
+                        <option value="">Choose Year...</option>
+                        <option value="1st">1st Year</option>
+                        <option value="2nd">2nd Year</option>
+                        <option value="3rd">3rd Year</option>
+                        <option value="4th">4th Year</option>
+                    </select>
+                    </div>
+                    <div class="col input-group mb-3">
+                    <label class="input-group-text" for="trimester">Trimester</label>
+                    <select class="form-select form-select-sm" id="trimester" name="trimester" required>
+                        <option value="">Choose Trimester...</option>
+                        <option value="1st">1st Trimester</option>
+                        <option value="2nd">2nd Trimester</option>
+                        <option value="3rd">3rd Trimester</option>
+                    </select>
+                    </div>
                 </div>
-                <div class="col input-group mb-3">
-                <label class="input-group-text" for="trimester">Trimester</label>
-                <select class="form-select" id="trimester" name="trimester" required>
-                    <option value="">Choose Trimester...</option>
-                    <option value="1st">1st Trimester</option>
-                    <option value="2nd">2nd Trimester</option>
-                    <option value="3rd">3rd Trimester</option>
-                </select>
+                <div class="row">
+                    <div class="col input-group mb-3">
+                    <span class="input-group-text">Code</span>
+                    <input type="text" class="form-control form-control-sm" name="code" placeholder="Code" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col input-group mb-3">
-                <span class="input-group-text">Code</span>
-                <input type="text" class="form-control" name="code" placeholder="Code" required>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Title</span>
+                    <input type="text" class="form-control form-control-sm" name="title" placeholder="Title" required>
                 </div>
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Title</span>
-                <input type="text" class="form-control" name="title" placeholder="Title" required>
-            </div>
-            <div class="row">
-                <div class="col input-group mb-3">
-                <span class="input-group-text">Units</span>
-                <input type="text" class="form-control" name="units" placeholder="Units" required>
+                <div class="row">
+                    <div class="col input-group mb-3">
+                    <span class="input-group-text">Units</span>
+                    <input type="text" class="form-control form-control-sm" name="units" placeholder="Units" required>
+                    </div>
+                    <div class="col input-group mb-3">
+                    <span class="input-group-text">Pre-requisite</span>
+                    <input type="text" class="form-control form-control-sm" name="prerequisite" placeholder="Pre-requisite" required>
+                    </div>
                 </div>
-                <div class="col input-group mb-3">
-                <span class="input-group-text">Pre-requisite</span>
-                <input type="text" class="form-control" name="prerequisite" placeholder="Pre-requisite" required>
                 </div>
-            </div>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-sm bg-light-subtle" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-sm bg-primary-subtle">Submit</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>

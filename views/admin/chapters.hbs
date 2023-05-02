@@ -1,8 +1,8 @@
-<div class="container text-white">
+<div class="container mt-5 text-white">
   <h6 class="text-uppercase">{{subject.code}}</h6>
   <form class="mb-5" id="addChapterForm">
     <h6>Chapters</h6>
-    <input type="text" name="subject" value="{{subject._id}}">
+    <input type="hidden" name="subject" value="{{subject._id}}">
     <div class="mb-3">
       <label for="title" class="form-label">Title</label>
       <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="Title" required>
@@ -25,42 +25,5 @@
       </li>
     {{/each}}
   </ul>
-
-  {{!-- <div id="chaptersContainer">
-    {{#if chapters}}
-      {{#each chapters}}
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#chapter{{this._id}}">
-              {{this.title}}
-            </button>
-          </h2>
-          <div id="chapter{{this._id}}" class="accordion-collapse collapse" data-bs-parent="#chaptersContainer">
-            <div class="accordion-body">
-              <div class="d-flex justify-content-between mb-5">
-                <div class="d-flex align-items-center gap-1">
-                  <button type="button" class="badge bg-success border-0"><i class="bi bi-pencil"></i></button>
-                  <form class="delChapterForm" action="/chapters/{{this._id}}?_method=DELETE" method="post">
-                    <input type="hidden" name="subjectId" value="{{this.subject}}">
-                    <button type="submit" class="badge bg-danger border-0"><i class="bi bi-trash"></i></button>
-                  </form>
-                </div>
-                <div>
-                  <a href="/questions/quiz/chapter/{{this.id}}" class="badge bg-primary text-decoration-none">Add Quiz</a>
-                  <a href="/questions/pretest/chapter/{{this.id}}" class="badge bg-primary text-decoration-none">Add Pre Test</a>
-                  <a href="/questions/posttest/chapter/{{this.id}}" class="badge bg-primary text-decoration-none">Add Post Test</a>
-                </div>
-              </div>
-              {{{this.markedHtml}}}
-            </div>
-          </div>
-        </div>
-      {{/each}}
-    {{else}}
-      No Chapters Available
-    {{/if}}
-  </div> --}}
   
 </div>
-
-{{> messages}}

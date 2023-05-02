@@ -1,22 +1,8 @@
-{{> dashboardnavbar}}
-
 <div class="container mt-3">
-  <h4>{{subject.title}} ({{subject.code}})</h4>
+  <h4 class="text-capitalize">{{subject.title}} <span class="text-uppercase">({{subject.code}})</span></h4>
   <h5>Chapters</h5>
 
   <div class="mt-5">
-    <!-- <div class="accordion" id="lessons">
-      {{#each chapters}}
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#chapter{{this._id}}">{{this.title}}</button>
-          </h2>
-          <div id="chapter{{this._id}}" class="accordion-collapse collapse" data-bs-parent="#lessons">
-            <div class="accordion-body">{{{this.markedHtml}}}</div>
-          </div>
-        </div>
-      {{/each}}
-    </div> -->
 
   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     {{#each chapters}}

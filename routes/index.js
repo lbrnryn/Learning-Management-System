@@ -23,44 +23,41 @@ router.post('/', (req, res, next) => {
 
 // Home Page - Register - POST /register
 router.post('/register', async (req, res, next) => {
-  const { username, firstname, lastname, password, password2 } = req.body;
+  const { username, firstname, lastname, password } = req.body;
   try {
-    let errors = [];
-    if (!username || !firstname || !password || !password2) {
-      errors.push('Please fill all fields');
-    }
-    if (password !== password2) {
-      errors.push('Passwords does not match');
-    }
-    const userName = await User.findOne({ username: username });
-    if (userName) {
-      errors.push('Username is already taken');
-    }
-    if (errors.length > 0) {
-      res.render('home', { title: 'LMS - Home', errors })
-    } else {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-      const newUser = await User.create({ username, password: hashedPassword, firstname, lastname });
-      req.flash('success', 'Successfully Registered');
-      res.redirect('/');
-    }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    await User.create({ username, password: hashedPassword, firstname, lastname });
+    req.flash('success', 'Successfully Registered');
+    res.redirect('/');
+
+    // let errors = [];
+    // if (!username || !firstname || !password || !password2) {
+    //   errors.push('Please fill all fields');
+    // }
+    // if (password !== password2) {
+    //   errors.push('Passwords does not match');
+    // }
+    // const userName = await User.findOne({ username: username });
+    // if (userName) {
+    //   errors.push('Username is already taken');
+    // }
+    // if (errors.length > 0) {
+    //   res.render('home', { title: 'LMS - Home', errors })
+    // } else {
+    //   const salt = await bcrypt.genSalt(10);
+    //   const hashedPassword = await bcrypt.hash(password, salt);
+    //   const newUser = await User.create({ username, password: hashedPassword, firstname, lastname });
+    //   req.flash('success', 'Successfully Registered');
+    //   res.redirect('/');
+    // }
   } catch (err) { next(err) }
 });
 
 // Dashboard Page - GET /dashboard
 // router.get('/dashboard', checkAuthenticated, async (req, res, next) => {
 router.get('/dashboard', async (req, res, next) => {
-  try {
-      // const usersArr = await User.find({}).lean();
-      // const users = usersArr.filter(user => !user.isAdmin && user.username !== "admin");
-      // users.forEach((user) => {
-      //   user.url = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}/api/users/${user._id}` : `https://lmslbrn.herokuapp.com/api/users/${user._id}`;
-      // });
-      // // const user = await User.findById({ _id: req.user._id });
-      // // res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true, user });   
-      // res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true });   
-    
+  try {    
 
     // if (req.user.isBasic) {
     //   const user = await User.findById({ _id: req.user._id });
@@ -76,31 +73,18 @@ router.get('/dashboard', async (req, res, next) => {
       title: 'Dashboard - Admin', 
       script: "./admin/dashboard.js", 
       users, 
-      user 
+      user
     });
 
     } else {
-      const user = await User.findById({ _id: req.user._id });
+      const user = await User.findById(req.user._id).lean();
+      
       res.render('student/dashboard', { 
         title: 'Dashboard - Student', 
-        user 
+        user,
+        isStudent: user.role === 'student'
       })
     }
-    // if (req.user.isAdmin || req.user.isTeacher) {
-    //   const usersArr = await User.find({}).lean();
-    //   const users = usersArr.filter(user => !user.isAdmin && user.username !== "admin");
-    //   users.forEach((user) => {
-    //     user.url = process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.PORT}/api/users/${user._id}` : `https://lmslbrn.herokuapp.com/api/users/${user._id}`;
-    //   });
-
-    //   const user = await User.findById({ _id: req.user._id });
-    //   res.render('admin/dashboard', { title: 'Dashboard - Admin', users, admin: true, user });
-    // }
-
-    // if (req.user.isStudent) {
-    //   const user = await User.findById({ _id: req.user._id });
-    //   res.render('student/dashboard', { title: 'Dashboard - Student', user });
-    // }
 
   } catch (err) { next(err) }
 })

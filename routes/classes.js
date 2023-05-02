@@ -26,14 +26,27 @@ router.get('/', async (req, res, next) => {
         // admin: true,
         user
       });
-    }
 
-    // // If logger is student
-    // if (req.user.isStudent) {
-    //   const classes = await Class.find({ student: { _id: req.user._id } }).populate('subject').populate('student');
-    //   const user = await User.findById({ _id: req.user._id });
-    //   res.render('student/class', { title: 'Class - Student', classes, user })
-    // }
+    } else {
+      const classes = await Class.find({ student: { _id: req.user._id } }).populate('subject').populate('students').lean();
+      const user = await User.findById(req.user._id).lean();
+      
+      res.render('student/class', {
+        title: 'Class - Student',
+        classes,
+        user,
+        isStudent: user.role === 'student',
+        helpers: {
+          formatTime(timeStart, timeEnd) {
+            let [hour, minute] = timeStart.split(':');
+            hour = hour > 12 ? (hour - 12).toString(): hour;
+            minute = minute < 10 ? `0${minute}`: minute;
+            // console.log(hour, minute)
+            return `${hour}:${minute} ${hour < 12 ? 'am': 'pm'}`;
+          }
+        }
+      })
+    }
 
   } catch (err) { next(err) }
 });

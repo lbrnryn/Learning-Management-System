@@ -15,9 +15,11 @@
           <li class="nav-item">
             <a class="nav-link" href="/dashboard"><i class="bi bi-house-door-fill me-2"></i>Dashboard</a>
           </li>
+          {{#unless isStudent}}
             <li class="nav-item">
               <a class="nav-link" href="/subjects"><i class="bi bi-journals me-2"></i>Subjects</a>
             </li>
+          {{/unless}}
           <li class="nav-item">
             <a class="nav-link" href="/classes"><i class="bi bi-book me-2"></i>Classes</a>
           </li>

@@ -42,73 +42,78 @@ router.get('/', async (req, res, next) => {
 // Get all chapters of subject - GET /subjects/:id/chapters
 router.get('/:id/chapters', async (req, res, next) => {
   try {
-    // if (req.user.isAdmin || req.user.isTeacher) {
+    if (req.user.role === 'admin') {
+
       const chapters = await Chapter.find({ subject: req.params.id }).lean();
-      const subject = await Subject.findById({ _id: req.params.id }).lean();
+      const subject = await Subject.findById(req.params.id).lean();
       // const user = await User.findById({ _id: req.user._id });
       res.render('admin/chapters', { subject, chapters, admin: true, user: true, script: "./admin/chapter.js" });
+
+    } else {
+
+      const subject = await Subject.findById(req.params.id).lean();
+      const chapters = await Chapter.find({ subject: req.params.id }).populate('subject').lean();
+      // const chapterIds = chapters.map((chapter) => chapter._id.toString());
+      const user = await User.findById({ _id: req.user._id }).lean();
+
+      res.render('student/chapters', {
+        subject,
+        chapters,
+        user,
+        isStudent: user.role === 'student'
+      });
+
+    }
+
+    // const subject = await Subject.findById({ _id: req.params.id});
+    // const chapters = await Chapter.find({ subject: req.params.id }).populate('subject').lean();
+    // const chapterIds = chapters.map((chapter) => chapter._id.toString());
+    // const user = await User.findById({ _id: req.user._id }).lean();
+
+    // if (user.quizzes) {
+    //   user.quizzes.forEach((quiz) => {
+    //     if (chapterIds.includes(quiz.chapter) && quiz.isQuizAnswered) {
+    //       chapters.forEach((chapter) => {
+    //         chapter.quiz = {
+    //           isQuizAnswered: quiz.isQuizAnswered,
+    //           score: quiz.score,
+    //           questionsLength: quiz.questionsLength
+    //         }
+    //       });
+    //     }
+    //   });
     // }
-    // if (req.user.isStudent) {
-    //   const subject = await Subject.findById({ _id: req.params.id});
-    //   const chapters = await Chapter.find({ subject: req.params.id }).populate('subject').lean();
-    //   const chapterIds = chapters.map((chapter) => chapter._id.toString());
-    //   const user = await User.findById({ _id: req.user._id }).lean();
 
-    //   if (user.quizzes) {
-    //     user.quizzes.forEach((quiz) => {
-    //       if (chapterIds.includes(quiz.chapter) && quiz.isQuizAnswered) {
-    //         chapters.forEach((chapter) => {
-    //           chapter.quiz = {
-    //             isQuizAnswered: quiz.isQuizAnswered,
-    //             score: quiz.score,
-    //             questionsLength: quiz.questionsLength
-    //           }
-    //         });
-    //       }
-    //     });
-    //   }
-
-    //   if (user.pretests) {
-    //     user.pretests.forEach((pretest) => {
-    //       if (chapterIds.includes(pretest.chapter) && pretest.isPretestAnswered) {
-    //         chapters.forEach((chapter) => {
-    //           chapter.pretest = {
-    //             isPretestAnswered: pretest.isPretestAnswered,
-    //             score: pretest.score,
-    //             questionsLength: pretest.questionsLength
-    //           }
-    //         });
-    //       }
-    //     });
-    //   }
-
-    //   if (user.posttests) {
-    //     user.posttests.forEach((posttest) => {
-    //       if (chapterIds.includes(posttest.chapter) && posttest.isPosttestAnswered) {
-    //         chapters.forEach((chapter) => {
-    //           chapter.posttest = {
-    //             isPosttestAnswered: posttest.isPosttestAnswered,
-    //             score: posttest.score,
-    //             questionsLength: posttest.questionsLength
-    //           }
-    //         });
-    //       }
-    //     });
-    //   }
-
-    //   res.render('student/chapters', { subject, chapters, user });
+    // if (user.pretests) {
+    //   user.pretests.forEach((pretest) => {
+    //     if (chapterIds.includes(pretest.chapter) && pretest.isPretestAnswered) {
+    //       chapters.forEach((chapter) => {
+    //         chapter.pretest = {
+    //           isPretestAnswered: pretest.isPretestAnswered,
+    //           score: pretest.score,
+    //           questionsLength: pretest.questionsLength
+    //         }
+    //       });
+    //     }
+    //   });
     // }
+
+    // if (user.posttests) {
+    //   user.posttests.forEach((posttest) => {
+    //     if (chapterIds.includes(posttest.chapter) && posttest.isPosttestAnswered) {
+    //       chapters.forEach((chapter) => {
+    //         chapter.posttest = {
+    //           isPosttestAnswered: posttest.isPosttestAnswered,
+    //           score: posttest.score,
+    //           questionsLength: posttest.questionsLength
+    //         }
+    //       });
+    //     }
+    //   });
+    // }
+
   } catch (err) { next(err) }
 });
-
-// // Creates single chapter of subject - POST /subjects/:id/chapters
-// router.post('/:id/chapters', async (req, res, next) => {
-//   try {
-//     const { title, lesson } = req.body;
-//     await Chapter.create({ subject: req.params.id, title, lesson });
-//     res.redirect(`/subjects/${req.params.id}/chapters`);
-//   } catch (err) { next(err) }
-// });
 
 // // GET - /subjects/chapters/:id/quizzes
 // router.get('/chapters/:id/quizzes', async (req, res) => {
