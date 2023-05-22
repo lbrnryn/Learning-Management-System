@@ -28,6 +28,6 @@ const userSchema = new mongoose.Schema({
   //   score: Number,
   //   isPosttestAnswered: Boolean
   // }]
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

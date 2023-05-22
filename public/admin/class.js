@@ -30,8 +30,6 @@ addClassForm.addEventListener("submit", async (e) => {
             }).then(res => res.json())
         ]);
 
-        // console.log(data);
-
         const matchedSubject = data[0].find(subject => subject._id === data[2].subject);
         const matchedTeacher = data[1].find(teacher => teacher._id === data[2].teacher);
 
@@ -62,8 +60,6 @@ addClassForm.addEventListener("submit", async (e) => {
         bootstrap.Modal.getInstance(addClassModal).hide();
 
     } else {
-        // const { section, subject, teacher, timeStart, timeEnd, day, room } = e.target.elements;
-        // console.log(section.value, subject.value, teacher.value, timeStart.value, timeEnd.value, day.value, room.value)
 
         const data = await Promise.all([
             fetch("/api/subjects").then(res => res.json()),
@@ -82,8 +78,6 @@ addClassForm.addEventListener("submit", async (e) => {
                 })
             }).then(res => res.json())
         ]);
-
-        // console.log(data)
 
         const matchedSubject = data[0].find(subject => subject._id === data[2].subject);
         const matchedTeacher = data[1].find(teacher => teacher._id === data[2].teacher);
@@ -105,8 +99,6 @@ addClassForm.addEventListener("submit", async (e) => {
             </td>
         `;
         classTableBody.appendChild(tr);
-
-        // <option class="text-capitalize" value="{{this._id}}">{{this.section}} | {{this.subject.code}} | {{this.teacher.firstname}} {{this.teacher.lastname}} | {{this.timeStart}} - {{this.timeEnd}} | {{this.day}} | {{this.room}}</option>
 
         const option = document.createElement("option");
         option.className = "text-capitalize";
@@ -134,7 +126,6 @@ classTableBody.addEventListener("click", async (e) => {
         
         const res = await fetch(url);
         const data = await res.json();
-        // console.log(data)
 
         section.value = data.section;
         Array.from(addClassForm.elements.subject.children).find(option => option.value === data.subject._id ? option.selected = true : option.selected = false);
@@ -159,7 +150,7 @@ classTableBody.addEventListener("click", async (e) => {
             
             const res = await fetch(url, { method: "DELETE" });
             const data = await res.json();
-            // console.log(data);
+
             const matchedOption =  Array.from(addStudentForm.elements.class.children).find(option => option.value === data._id);
             matchedOption.remove();
 
@@ -201,7 +192,6 @@ addStudentForm.elements.class.addEventListener("change", async (e) => {
             fetch(`/api/classes/${e.target.value}`).then(res => res.json()),
             fetch("/api/users/students").then(res => res.json())
         ]);
-        // console.log(data);
     
         // Create students IDs array
         const classStudentsIDs = data[0].students.map(student => student._id);
@@ -219,7 +209,6 @@ addStudentForm.elements.class.addEventListener("change", async (e) => {
             </div>
             `
         }).join(" ");
-        // console.log(studentsFormattedInHTML);
     
         studentsDiv.innerHTML = studentsFormattedInHTML;
     } else {
@@ -238,7 +227,7 @@ addStudentForm.addEventListener("submit", async (e) => {
         body: JSON.stringify({ students: studentIDs })
     });
     const data = await res.json();
-    // console.log(data);
+    
     const matchedTableRow = Array.from(classTableBody.children).find(tr => tr.dataset.id === data._id);
     matchedTableRow.children.studentsLength.innerText = data.students.length;
 

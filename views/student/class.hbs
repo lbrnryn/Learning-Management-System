@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div class="container mt-5">
   <div class="row g-4">
     {{#each classes}}
       <div class="col-md-6">
@@ -11,6 +11,7 @@
               {{!-- <p class="card-text">{{this.timeStart}} - {{this.timeEnd}}</p> --}}
               <p class="card-text">{{formatTime this.timeStart this.timeEnd}}</p>
               <p class="card-text">{{this.subject.chapters.length}} Chapters</p>
+              {{!-- <p class="card-text">(Subject ID {{this.subject._id}}) Chapters Length ???</p> --}}
             </div>
           </div>
         </a>

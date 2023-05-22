@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: 'secret',
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
 }));
 app.use(flash());
 app.use((req, res, next)=> {

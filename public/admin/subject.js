@@ -117,7 +117,7 @@ editSubjectForms.forEach(editSubjectForm => {
     e.preventDefault();
 
     const { year, trimester, code, title, units, prerequisite } = e.target.elements;
-    // console.log(e.target.action)
+
     const res = await fetch(e.target.action, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -132,7 +132,7 @@ editSubjectForms.forEach(editSubjectForm => {
     });
 
     const data = await res.json();
-    // console.log(data);
+
     const modalID = e.target.parentElement.parentElement.parentElement.id;
     bootstrap.Modal.getInstance(`#${modalID}`).hide();
     
@@ -212,7 +212,7 @@ editSubjectForms.forEach(editSubjectForm => {
 });
 
 const tbodys = document.querySelectorAll("table > tbody");
-// console.log(tbodys)
+
 tbodys.forEach(tbody => {
   tbody.addEventListener("click", async (e) => {
     if (e.target.parentElement.classList.contains("deleteSubjectBtn")) {

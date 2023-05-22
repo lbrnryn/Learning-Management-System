@@ -1,6 +1,6 @@
 const addChapterForm = document.querySelector("#addChapterForm");
 const chapterList = document.querySelector("#chapterList");
-const { subject, title, lesson } = addChapterForm.elements;
+const { subject, title, lesson, cancelEditChapterBtn } = addChapterForm.elements;
 let editChapterUrl;
 
 addChapterForm.addEventListener("submit", async (e) => {
@@ -28,9 +28,8 @@ addChapterForm.addEventListener("submit", async (e) => {
         `;
         
         editChapterUrl = undefined;
-        subject.value = "";
-        title.value = "";
-        lesson.value = "";
+        Array.from(e.target.elements).filter(element => element.tagName !== 'BUTTON').forEach(element => element.value = '');
+        cancelEditChapterBtn.classList.add('d-none');
     } else {
         const res = await fetch("/api/chapters", {
             method: "POST",
@@ -54,10 +53,8 @@ addChapterForm.addEventListener("submit", async (e) => {
             </div>
         `;
         chapterList.appendChild(li);
-    
-        subject.value = "";
-        title.value = "";
-        lesson.value = "";
+        
+        Array.from(e.target.elements).filter(element => element.tagName !== 'BUTTON').forEach(element => element.value = '');
     }
 });
 
@@ -73,6 +70,7 @@ chapterList.addEventListener('click', async (e) => {
         subject.value = data.subject;
         title.value = data.title;
         lesson.value = data.lesson;
+        cancelEditChapterBtn.classList.remove('d-none');
 
         editChapterUrl = url;
     }
@@ -83,9 +81,13 @@ chapterList.addEventListener('click', async (e) => {
 
         deleteChapterBtn.parentElement.parentElement.remove();
         editChapterUrl = undefined;
-        subject.value = "";
-        title.value = "";
-        lesson.value = "";
+        Array.from(addChapterForm.elements).filter(element => element.tagName !== 'BUTTON').forEach(element => element.value = '');
         await fetch(url, { method: 'DELETE' });
     }
 });
+
+cancelEditChapterBtn.addEventListener('click', (e) => {
+    editChapterUrl = undefined;
+    Array.from(addChapterForm.elements).filter(element => element.tagName !== 'BUTTON').forEach(element => element.value = '');
+    e.target.classList.add('d-none');
+})

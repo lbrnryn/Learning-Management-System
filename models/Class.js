@@ -9,6 +9,6 @@ const classSchema = new mongoose.Schema({
   timeStart: String,
   timeEnd: String,
   room: String
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Class', classSchema);

@@ -18,7 +18,7 @@ const chapterSchema = new mongoose.Schema({
   lesson: String,
   markedHtml: String,
   // quiz: [quizSchema]
-});
+}, { timestamps: true });
 
 chapterSchema.pre('validate', function(next) {
   if (this.lesson) {
