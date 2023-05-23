@@ -6,11 +6,11 @@ module.exports = function(passport) {
   passport.use(new LocalStrategy({ usernameField: 'username' }, async (username, password, done) => {
     const user = await User.findOne({ username: username});
     if (!user) {
-      return done(null, false, { message: 'Username is not registered' });
+      return done(null, false, { message: 'Username is not registered', field: 'username' });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return done(null, false, { message: 'Incorrect password' });
+      return done(null, false, { message: 'Incorrect password', field: 'password' });
     }
     return done(null, user, { message: `Welcome ${user.username}` })
   }))

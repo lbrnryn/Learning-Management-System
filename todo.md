@@ -2,7 +2,11 @@
 
 ## Home Page
 
-<input type="checkbox"/> Remove username and password check when logging in
+<input type="checkbox" checked/> Remove username and password check when logging in
+
+<input type="checkbox" checked/> Move login functionality in API
+
+<input type="checkbox"/> Create a validation error message inside the form
 
 ## Subject Page
 

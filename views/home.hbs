@@ -1,22 +1,22 @@
 <div class="col-8 col-sm-6 col-md-5 col-lg-4 col-xl-3 mx-auto mt-5 pt-5">
     <div id="login">
         <div class="d-flex justify-content-around">
-            <form action="/" method="post">
-                <input type="hidden" name="username" value="admin">
-                <input type="hidden" name="password" value="admin">
+            <form action="/" method="post" id="loginAsAdminFormBtn">
+                <input type="hidden" id="loginAsAdminFormBtnUsername" name="username" value="admin">
+                <input type="hidden" id="loginAsAdminFormBtnPassword" name="password" value="admin">
                 <button type="submit" class="btn btn-sm bg-primary-subtle">Login as Admin</button>
             </form>
 
-            <form action="/" method="post">
-                <input type="hidden" name="username" value="student">
-                <input type="hidden" name="password" value="student">
+            <form action="/" method="post" id="loginAsStudentFormBtn">
+                <input type="hidden" id="loginAsStudentFormBtnUsername" name="username" value="student">
+                <input type="hidden" id="loginAsStudentFormBtnPassword" name="password" value="student">
                 <button type="submit" class="btn btn-sm bg-primary-subtle">Login as Student</button>
             </form>
         </div>
 
         <p class="text-center small my-3">OR</p>
 
-        <form action="/" method="post" class="d-grid gap-3 needs-validation" novalidate>
+        <form action="/" method="post" class="d-grid gap-3 needs-validation" id="loginForm" novalidate>
             <div class="form-floating">
                 <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Username" required>
                 <label for="loginUsername">Username</label>

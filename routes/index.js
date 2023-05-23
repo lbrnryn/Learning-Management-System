@@ -13,11 +13,13 @@ router.get('/', (req, res) => {
 
 // Home Page - login - POST /
 router.post('/', (req, res, next) => {
-  passport.authenticate('local', { 
-    successRedirect: '/dashboard', 
-    failureRedirect: '/', 
-    failureFlash: true, 
-    // successFlash: true 
+  passport.authenticate('local', function(err, user, info, status) {
+    if (err) { return next(err) }
+    if (!user) { return res.json({ success: false, ...info }) }
+    req.login(user, (err) => {
+      if (err) { return next(err) };
+      res.json({ success: true, redirectUrl: '/dashboard' });
+    })
   })(req, res, next);
 });
 
@@ -57,8 +59,7 @@ router.post('/register', async (req, res, next) => {
 // Dashboard Page - GET /dashboard
 // router.get('/dashboard', checkAuthenticated, async (req, res, next) => {
 router.get('/dashboard', async (req, res, next) => {
-  try {    
-
+  try {
     // if (req.user.isBasic) {
     //   const user = await User.findById({ _id: req.user._id });
     //   res.render('notverified', { user });
